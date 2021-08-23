@@ -1,3 +1,7 @@
+/** A class representing a CT image slice object
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
+
 import java.util.ArrayList;
 
 public class CTImageSlice {
@@ -6,7 +10,7 @@ public class CTImageSlice {
     public int xDimension;
     public int yDimension;
     public int[][] imageArray;
-    final int threshold = 120;
+    final int threshold = 120;   // Threshold for determining if a voxel is a fracture. To be determined analytically later
 
     public CTImageSlice(int zCoOrd, int xDimension, int yDimension, int[][] imageArray){
         this.zCoOrd = zCoOrd;
@@ -26,7 +30,7 @@ public class CTImageSlice {
                 if (imageArray[i][j] <= threshold && testNeighbours(i, j)){
                     fractureVoxels.add(new FractureVoxel(zCoOrd, i, j));
                     //System.out.print(imageArray[i][j]);
-                    System.out.println("X-coOrd: " + i + " Y-coOrd: " + j);
+                    System.out.println("X-coOrd: " + i + " Y-coOrd: " + j);  // For some reason x and y are confused lol
                 }
             }
             //System.out.println();
@@ -35,8 +39,8 @@ public class CTImageSlice {
     }
 
     /** Method to test the number of coloured voxels around a fractured voxel
-     * If the count is greater than 3 we can assume it is a fracture
-     * Else if the count is less than 3 we can assume it is part of the background
+     * If the count is greater than 4 we can assume it is a fracture
+     * Else if the count is less than or equal to 4 we can assume it is part of the background
      * @param x
      * @param y
      * @return
