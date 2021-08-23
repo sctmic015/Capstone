@@ -16,7 +16,7 @@ public class CTImageSlice {
     }
 
     /**
-     * Finds the fracture voxels bases on the colour of the voxel and the neighbour checking in testNeighbours method
+     * Finds the fracture voxels based on the colour of the voxel and the neighbour checking in testNeighbours method
      * @return
      */
     public ArrayList<FractureVoxel> findFractureVoxels(){
