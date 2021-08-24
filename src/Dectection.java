@@ -6,6 +6,7 @@ public class Dectection {
 
 
     public static void main (String[] args) throws Exception {
+        ArrayList<Fracture> fractures; 
         ArrayList<FractureVoxel> fractureVoxels;
         int[][] image = readPGM("cross53.pgm"); // Read pgm image into 2D array
         // int[][] smoothedImage = SomeSmoothingMethod;
