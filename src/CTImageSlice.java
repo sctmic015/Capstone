@@ -27,10 +27,10 @@ public class CTImageSlice {
         ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>();
         for (int i = 1; i < xDimension -1; i ++){
             for (int j = 1; j < yDimension -1; j ++){
-                if (imageArray[i][j] <= threshold && testNeighbours(i, j)){
-                    fractureVoxels.add(new FractureVoxel(zCoOrd, i, j));
+                if (imageArray[i][j] <= threshold && imageArray[i][j] > 0){
+                    fractureVoxels.add(new FractureVoxel(zCoOrd, j, i));
                     //System.out.print(imageArray[i][j]);
-                    System.out.println("X-coOrd: " + i + " Y-coOrd: " + j);  // For some reason x and y are confused lol
+                    System.out.println("X-coOrd: " + j + " Y-coOrd: " + i);  // For some reason x and y are confused lol
                 }
             }
             //System.out.println();

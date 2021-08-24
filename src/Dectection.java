@@ -8,6 +8,7 @@ public class Dectection {
     public static void main (String[] args) throws Exception {
         ArrayList<FractureVoxel> fractureVoxels;
         int[][] image = readPGM("cross53.pgm"); // Read pgm image into 2D array
+        // int[][] smoothedImage = SomeSmoothingMethod;
         CTImageSlice CTImageSlice = new CTImageSlice(53, image.length, image.length, image); // Create a new Image slice object
 
         fractureVoxels = CTImageSlice.findFractureVoxels(); // Find Fracture Voxels returns an array list of fractureVoxels objects
