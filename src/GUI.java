@@ -43,6 +43,7 @@ public class GUI extends JFrame{
         findButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO: find button clicked
+                imagePanel.findFractures();
             }
         });
         // Layout - Outter window
@@ -84,7 +85,8 @@ public class GUI extends JFrame{
             GUI gui = new GUI();
             gui.setVisible(true);
 
-            int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/ellipse512_18/test-D512-V6141-F14-281.pgm");
+            // int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/ellipse512_18/test-D512-V6141-F14-281.pgm");
+            int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
             CTImageSlice imageSlice = new CTImageSlice(38, imageData);
 
             gui.displayImageSlice(imageSlice);            
