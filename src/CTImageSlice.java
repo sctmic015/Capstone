@@ -4,6 +4,8 @@
  */
 
 import java.util.ArrayList;
+import java.awt.image.*;
+import java.awt.*;
 
 public class CTImageSlice {
 
@@ -11,6 +13,7 @@ public class CTImageSlice {
     private int xDimension;
     private int yDimension;
     private int[][] imageData;
+    private BufferedImage image; // RGB image representation of data
     final int threshold = 120;   // Threshold for determining if a voxel is a fracture. To be determined analytically later
 
     /**
@@ -37,6 +40,7 @@ public class CTImageSlice {
         // calculated from image data
         this.xDimension = imageData.length;
         this.yDimension = imageData.length;
+        deriveImage();
     }
 
 
@@ -59,27 +63,21 @@ public class CTImageSlice {
         return fractureVoxels;
     }
 
-    /** Method to test the number of coloured voxels around a fractured voxel
-     * If the count is greater than 4 we can assume it is a fracture
-     * Else if the count is less than or equal to 4 we can assume it is part of the background
-     * @param x
-     * @param y
-     * @return
+    /**
+     * Generates greyscale image representation of image slice
      */
-    public boolean testNeighbours(int x, int y){
-        int count = 0;
-        for (int i = x -1; i <= x +1; i ++){
-            for (int j = y -1; j <= y +1; j ++){
-                if (imageData[i][j] > threshold){
-                    count ++;
-                }
+    void deriveImage(){
+        image = new BufferedImage(xDimension, yDimension, BufferedImage.TYPE_INT_ARGB);
+        for(int x=0; x < xDimension-1; x++){
+            for(int y=0; y < yDimension-1; y++) {
+                int r = imageData[y][x];
+                int g = imageData[y][x];
+                int b = imageData[y][x];
+                int a = 255;
+                Color color = new Color(r,g,b,a);
+                image.setRGB(x, y, color.getRGB());
             }
         }
-        if (count > 4){
-            return true;
-        }
-        else
-            return false;
     }
 
     public int getZCoOrd() {
@@ -92,6 +90,19 @@ public class CTImageSlice {
 
     public int getYDimension() {
         return this.yDimension;
+    }
+
+    /**
+     * Gets the image representation of the image slice
+     * Will attempt to derive the image if image data is present but an image representation 
+     * hasnt been generated
+     * @return BufferedImage image representation of the image slice
+     */
+    public BufferedImage getImage() {
+        if (image == null && imageData != null) {
+            deriveImage();
+        }
+        return image;
     }
 
     public int[][] getImageData() {
