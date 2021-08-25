@@ -60,4 +60,8 @@ public class ImagePanel extends JPanel{
         this.imageSlice = imageSlice;
         repaint();
     }
+
+    public void paintFractures() {
+        ArrayList<FractureVoxel> fractureVoxels = Dectection.findFractureVoxels(imageSlice);
+    }
 }
