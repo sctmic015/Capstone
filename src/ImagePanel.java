@@ -1,8 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.*;
+import java.util.ArrayList;
 
 public class ImagePanel extends JPanel{
     private CTImageSlice imageSlice;
+    private ArrayList<FractureVoxel> fractureVoxels; // TODO: change to just fractures not fracture voxels
+    private BufferedImage overlayImage;
 
     public ImagePanel() {
         setupPanelBasics();
@@ -40,15 +44,13 @@ public class ImagePanel extends JPanel{
         if (imageSlice != null) {
             // draw the image slice in greyscale as an image
             if (imageSlice.getImage() != null){
-                g.drawImage(imageSlice.getImage(), 0, 0, null);
+                g.drawImage(imageSlice.getImage().getScaledInstance(600, 600, 0), 0, 0, null);
             }
             // TODO: paint fractures over image, using colour assigned to them
-            /*
-            fractures.deriveImage();
-            if (fractures.getImage() != null) {
-                g.drawImage(fractures.getImage(), 0, 0, null);
+            // change to use fractures not fractureVoxels
+            if (overlayImage != null) {
+                g.drawImage(overlayImage.getScaledInstance(600, 600, 0), 0, 0, null);
             }
-            */
         }
 	}
 
@@ -61,7 +63,22 @@ public class ImagePanel extends JPanel{
         repaint();
     }
 
-    public void paintFractures() {
-        ArrayList<FractureVoxel> fractureVoxels = Dectection.findFractureVoxels(imageSlice);
+    /**
+     * Dectects fractures on CTImageSlice and paints them red
+     */
+    public void findFractures() {
+        if (imageSlice != null) {
+            ArrayList<FractureVoxel> fractureVoxels = Dectection.findFractureVoxels(imageSlice); // detect fractures
+            overlayImage = new BufferedImage(imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight(), BufferedImage.TYPE_INT_ARGB);
+            for (FractureVoxel fractureVoxel : fractureVoxels) {
+                int r = 255;
+                int g = 0;
+                int b = 0;
+                int a = 255;
+                Color color = new Color(r,g,b,a);
+                overlayImage.setRGB(fractureVoxel.getX(), fractureVoxel.getY(), color.getRGB()); // update
+            }
+            repaint();
+        }
     }
 }
