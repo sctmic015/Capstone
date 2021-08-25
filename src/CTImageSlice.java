@@ -2,8 +2,6 @@
  * A class representing a CT image slice object
  * @author SCTMIC015, SMTJUL022, BLRDAV002
  */
-
-import java.util.ArrayList;
 import java.awt.image.*;
 import java.awt.*;
 
@@ -41,26 +39,6 @@ public class CTImageSlice {
         this.xDimension = imageData.length;
         this.yDimension = imageData.length;
         deriveImage();
-    }
-
-
-    /**
-     * Finds the fracture voxels by looking at the voxels colour and its neighbours
-     * @return
-     */
-    public ArrayList<FractureVoxel> findFractureVoxels(){
-        ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>();
-        for (int x = 1; x < xDimension -1; x ++){
-            for (int y = 1; y < yDimension -1; y ++){
-                if (imageData[x][y] <= threshold && imageData[x][y] > 0){
-                    fractureVoxels.add(new FractureVoxel(zCoOrd, y, x));
-                    //System.out.print(imageData[x][y]);
-                    System.out.println("X-coOrd: " + y + " Y-coOrd: " + x);  // For some reason x and y are confused lol
-                }
-            }
-            //System.out.println();
-        }
-        return fractureVoxels;
     }
 
     /**
