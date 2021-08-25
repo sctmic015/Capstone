@@ -1,8 +1,79 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Scanner;
+import javax.swing.*;
 
-public class GUI {
+public class GUI extends JFrame{
+    // Dimensions of GUI window
+    static int frameX = 900;
+	static int frameY = 900;
+    // Instance variables
+    private javax.swing.JButton findButton;
+    private javax.swing.JButton groupButton;
+    private ImagePanel imagePanel; // custom JPanel 
+
+    /**
+     * Constructor that sets up basic UI 
+     */
+    public GUI() {
+        this.setupGUI();
+    }
+    
+    /**
+     * Used to setup the user interface ]
+     * 
+     * Note: No Image slice is rendered at this point 
+     */
+    public void setupGUI() {
+        // Setup 
+        imagePanel = new ImagePanel();
+        findButton = new javax.swing.JButton();
+        groupButton = new javax.swing.JButton();
+        // Window behaviour
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("VFDS");
+        // Buttons
+        findButton.setText("Find");
+        groupButton.setText("Group");
+        // Buttons - ActionListeners
+        groupButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO: group button clicked
+            }
+        });
+        findButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO: find button clicked
+            }
+        });
+        // Layout - Outter window
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(150, 150, 150)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(150, 150, 150))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50))
+        );
+        // Render neatly
+        pack();
+    }
 
 
     /**
@@ -10,10 +81,16 @@ public class GUI {
      */
     public static void main(String[] args) {
         try {
-            int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/cross38.pgm");
-            CTImageSlice imageSlice = new CTImageSlice(38, imageData);
-            ArrayList<FractureVoxel> fractureVoxels = imageSlice.findFractureVoxels();
+            GUI gui = new GUI();
+            gui.setVisible(true);
 
+            int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/ellipse512_18/test-D512-V6141-F14-281.pgm");
+            CTImageSlice imageSlice = new CTImageSlice(38, imageData);
+
+            gui.displayImageSlice(imageSlice);            
+            // ArrayList<FractureVoxel> fractureVoxels = imageSlice.findFractureVoxels();
+
+            
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -74,4 +151,15 @@ public class GUI {
         return imageData;
     }
 
+    /**
+     * Displays given image slice on GUI 
+     * It takes the image slice and passes it to the ImagePanel, 
+     * which handles the actual rendering.
+     * 
+     * Note: ImagePanel will automatically repaint/refresh the panel
+     * @param imageSlice
+     */
+    public void displayImageSlice(CTImageSlice imageSlice) {
+        imagePanel.setImageSlice(imageSlice);
+    }
 }
