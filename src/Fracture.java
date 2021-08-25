@@ -19,7 +19,7 @@ public int getSize(){
 
 public boolean isPartOfFracture(FractureVoxel f){
     for (FractureVoxel i : arrVoxels){
-        if(true ){
+        if(i.checkNeighbourVoxel(f)){
             return true;
         }
     }
