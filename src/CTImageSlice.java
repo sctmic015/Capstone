@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class CTImageSlice {
 
-    public int zCoOrd;
-    public int xDimension;
-    public int yDimension;
+    private int zCoOrd;
+    private int xDimension;
+    private int yDimension;
     private int[][] imageData;
     final int threshold = 120;   // Threshold for determining if a voxel is a fracture. To be determined analytically later
 
@@ -38,6 +38,7 @@ public class CTImageSlice {
         this.xDimension = imageData.length;
         this.yDimension = imageData.length;
     }
+
 
     /**
      * Finds the fracture voxels by looking at the voxels colour and its neighbours
@@ -80,4 +81,23 @@ public class CTImageSlice {
         else
             return false;
     }
+
+    public int getZCoOrd() {
+        return this.zCoOrd;
+    }
+
+    public int getXDimension() {
+        return this.xDimension;
+    }
+
+    public int getYDimension() {
+        return this.yDimension;
+    }
+
+    public int[][] getImageData() {
+        // TODO: deep copy
+        return this.imageData;
+    }
+
+
 }
