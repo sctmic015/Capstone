@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.awt.*;
 
 
 /**
@@ -6,11 +7,22 @@ import java.util.ArrayList;
  */
 public class Fracture {
     private ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>(); 
+    private Color color;
 
     /**
      * Basic constructor
      */
-    public Fracture() {}
+    public Fracture() {
+        color = new Color(255,0,0,255); // defualt to red
+    }
+
+    /**
+     * Constructor for when a color is passed 
+     * @param color color of fracture  
+     */
+    public Fracture(Color color) {
+        this.color = color;
+    }
 
 
     /**
@@ -41,5 +53,20 @@ public class Fracture {
         return fractureVoxels.contains(fractureVoxelToCheck);
     }
 
+    /**
+     * Gets a list of all fracture voxels in fracture
+     * @return ArrayList<FractureVoxel> List of fracture voxels in fracture
+     */
+    public ArrayList<FractureVoxel> getFractureVoxels() {
+        return fractureVoxels;
+    }
+
+    /**
+     * Gets color of the fracture 
+     * @return Color color of the fracture 
+     */
+    public Color getColor() {
+        return color;
+    }
     
 }
