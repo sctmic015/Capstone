@@ -56,30 +56,5 @@ public class Dectection {
             return false;
     }
 
-    public static ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
-        ArrayList<Fracture> fractures = new ArrayList<Fracture>();
-        for (FractureVoxel fractureVoxel : fractureVoxels) {
-            for (FractureVoxel fractureVoxelNeighbour : fractureVoxels) {
-                if (fractureVoxel.isNeighbourVoxel(fractureVoxelNeighbour)) {
-                    if (!fractureVoxelNeighbour.hasAssignedFracture()) {
-                        if (!fractureVoxel.hasAssignedFracture()) {
-                            Fracture newFracture = new Fracture();
-                            // add both voxels to new fracture
-                            // NOTE: when voxels are added to fracture they are marked assigned
-                            newFracture.addVoxel(fractureVoxel);
-                            if (fractureVoxel != fractureVoxelNeighbour) {
-                                newFracture.addVoxel(fractureVoxelNeighbour);
-                            }
-                        }else{
-                            fractureVoxelNeighbour.setAssignedFracture(fractureVoxel.getAssignedFracture());
-                        }
-                    }else{
-                        // TODO: merge two fractures if fractureVoxelNeighbour and fractureVoxel fractures are different
-                    }
-                }
-            }
-        }
-        return fractures;
-    }
 
 }
