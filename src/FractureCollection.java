@@ -9,7 +9,7 @@ public class FractureCollection {
      * @param fractureVoxels
      */
     public FractureCollection(ArrayList<FractureVoxel> fractureVoxels) {
-        fractures = FractureCollection.getFractures(fractureVoxels);
+        getFractures(fractureVoxels);
     }
     
 
@@ -53,8 +53,7 @@ public class FractureCollection {
      * @param fractureVoxels List of fracture voxels (ungrouped)
      * @return ArrayList<Fracture> List of fractures
      */
-    public static ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
-        ArrayList<Fracture> fractures = new ArrayList<Fracture>();
+    public ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
 
         for (FractureVoxel fractureVoxel : fractureVoxels) {
             for (FractureVoxel fractureVoxelNeighbour : fractureVoxels) {
@@ -62,6 +61,7 @@ public class FractureCollection {
                     if (!fractureVoxelNeighbour.hasAssignedFracture()) {
                         if (!fractureVoxel.hasAssignedFracture()) {
                             Fracture newFracture = new Fracture();
+                            fractures.add(newFracture);
                             // add both voxels to new fracture
                             // NOTE: when voxels are added to fracture they are marked assigned
                             newFracture.addVoxel(fractureVoxel);
@@ -77,7 +77,6 @@ public class FractureCollection {
                 }
             }
         }
-        
         return fractures;
     }
 
