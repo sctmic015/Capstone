@@ -69,6 +69,7 @@ public class ImagePanel extends JPanel{
      * @param imageSlice CTImageSlice The image slice to paint in this panel
      */
     public void setImageSlice(CTImageSlice imageSlice) {
+        // clearOverlay();
         this.imageSlice = imageSlice;
         fractureVoxels = Dectection.findFractureVoxels(imageSlice); // detect fracture voxels 
         repaint();
@@ -95,5 +96,12 @@ public class ImagePanel extends JPanel{
             overlayImage = fractureCollection.getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
             repaint();
         }
+    }
+
+    /**
+     * Clears the entire image panel canvas
+     */
+    public void clearOverlay() {
+        overlayImage = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
     }
 }
