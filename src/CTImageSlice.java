@@ -44,7 +44,7 @@ public class CTImageSlice {
     /**
      * Generates greyscale image representation of image slice
      */
-    void deriveImage(){
+    private void deriveImage(){
         image = new BufferedImage(xDimension, yDimension, BufferedImage.TYPE_INT_ARGB);
         for(int x=0; x < xDimension-1; x++){
             for(int y=0; y < yDimension-1; y++) {
