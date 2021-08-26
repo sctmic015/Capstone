@@ -6,12 +6,12 @@ public class ColourBuilder {
      Color.PINK, Color.ORANGE, Color.RED, Color.MAGENTA};  
 
 
-     public static void assignColorsToFractures(ArrayList<Fracture> f ){
+     public static void assignColorsToFractures(ArrayList<Fracture> fractures){
         //shouldnt be more than 3 or 4 total fractures according to patrick. 
-                int count = 0;
-                for (Fracture x : f){
-                    x.setColor(colors[count]);
-                    count ++;
-                }
+        int count = 0;
+        for (Fracture fracture : fractures){
+            fracture.setColor(colors[count]);
+            count ++;
+        }
      }
 }
