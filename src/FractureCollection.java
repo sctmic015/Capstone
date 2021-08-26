@@ -49,27 +49,25 @@ public class FractureCollection {
     */
 
     /**
-     * Gets grouping of fractures from a set of fracture voxels 
+     * Gets grouping of fractures from a set of fracture voxels and appends them to fractures list
      * @param fractureVoxels List of fracture voxels (ungrouped)
      * @return ArrayList<Fracture> List of fractures
      */
     public ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
-
         for (FractureVoxel fractureVoxel : fractureVoxels) {
             for (FractureVoxel fractureVoxelNeighbour : fractureVoxels) {
                 if (fractureVoxel.isNeighbourVoxel(fractureVoxelNeighbour)) {
                     if (!fractureVoxelNeighbour.hasAssignedFracture()) {
                         if (!fractureVoxel.hasAssignedFracture()) {
                             Fracture newFracture = new Fracture();
-                            fractures.add(newFracture);
                             // add both voxels to new fracture
                             // NOTE: when voxels are added to fracture they are marked assigned
                             newFracture.addVoxel(fractureVoxel);
-                            if (fractureVoxel != fractureVoxelNeighbour) {
-                                newFracture.addVoxel(fractureVoxelNeighbour);
-                            }
+                            newFracture.addVoxel(fractureVoxelNeighbour);
+                            fractures.add(newFracture);
                         }else{
-                            fractureVoxelNeighbour.setAssignedFracture(fractureVoxel.getAssignedFracture());
+                            // NOTE: when voxels are added to fracture they are marked assigned
+                            fractureVoxel.getAssignedFracture().addVoxel(fractureVoxelNeighbour);
                         }
                     }else{
                         // TODO: merge two fractures if fractureVoxelNeighbour and fractureVoxel fractures are different
@@ -85,9 +83,9 @@ public class FractureCollection {
      * @param zPlane The z-plane to get image rep. for 
      * @return BufferedImage An image representation of the fractures for a given Z plane
      */
-    public BufferedImage getImage(int zPlane) {
+    public BufferedImage getImage(int zPlane, int width, int height) {
         if (fractures.size()>0) {
-            BufferedImage image = new BufferedImage(fractures.get(0).getFractureVoxels().get(0).getX(), fractures.get(0).getFractureVoxels().get(0).getY(), BufferedImage.TYPE_INT_ARGB);
+            BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
             // Loop through all fractures, then loop through all its voxels 
             // if the voxel is on the plane, paint that voxel onto the image 
             // using the given colour of the fracture
