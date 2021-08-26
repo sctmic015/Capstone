@@ -1,9 +1,10 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Dectection {
 
-    static final int LOWER_BOUND_THRESHOLD = 110;
-    static final int UPPER_BOUND_THRESHOLD = 130;
+    static final int LOWER_BOUND_THRESHOLD = 100;
+    static final int UPPER_BOUND_THRESHOLD = 150;
 
     /**
      * Finds the fracture voxels by looking at the voxels colour and its neighbours
@@ -13,8 +14,12 @@ public class Dectection {
         ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>();
         for (int x = 1; x < imageSlice.getXDimension() -1; x ++){
             for (int y = 1; y < imageSlice.getYDimension() -1; y ++){
-                if (imageSlice.getImageData()[x][y] > LOWER_BOUND_THRESHOLD &&
-                    imageSlice.getImageData()[x][y] < UPPER_BOUND_THRESHOLD
+                int voxelValue = imageSlice.getImageData()[x][y];
+                // if (voxelValue > 0 && voxelValue < 10) {
+                //     System.out.println(voxelValue);
+                // }
+                if (voxelValue > LOWER_BOUND_THRESHOLD &&
+                    voxelValue < UPPER_BOUND_THRESHOLD
                     ){
                         fractureVoxels.add(new FractureVoxel(imageSlice.getZCoOrd(), y, x));
                         //System.out.print(imageData[x][y]);
@@ -50,5 +55,6 @@ public class Dectection {
         else
             return false;
     }
+
 
 }
