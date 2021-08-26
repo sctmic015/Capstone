@@ -6,18 +6,16 @@ public class FractureVoxel {
     public int xCoOrd;
     public int yCoOrd;
     private Fracture assignedFracture; // Ref. to Fracture this voxel is assigned to 
-    //public int colour;
 
     public FractureVoxel(int zCoOrd, int xCoOrd, int yCoOrd) {
         this.xCoOrd = xCoOrd;
         this.yCoOrd = yCoOrd;
         this.zCoOrd = zCoOrd;
-        //this.colour = colour;
     }
 
     /**
      * Method to getX co-ord of FractureVoxel
-     * @return
+     * @return int X co-ord of FractureVoxel
      */
     public int getX(){
         return xCoOrd;
@@ -25,10 +23,18 @@ public class FractureVoxel {
 
     /**
      * Method to get Y co-ord of FractureVoxel
-     * @return
+     * @return int Y co-ord of FractureVoxel
      */
     public int getY(){
         return yCoOrd;
+    }
+
+    /**
+     * Method to get Z co-ord of FractureVoxel
+     * @return int Z co-ord of FractureVoxel
+     */
+    public int getZ(){
+        return zCoOrd;
     }
 
     /**
