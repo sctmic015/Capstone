@@ -71,9 +71,10 @@ public class Fracture {
 
     /**
      * Sets Color of fracture
+     * @param color
      */
-    public void setColor(Color c){
-        this.color = c;
+    public void setColor(Color color){
+        this.color = color;
     }
     
 }
