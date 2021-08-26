@@ -27,7 +27,7 @@ public class GUI extends JFrame{
         GUI gui = new GUI();
         gui.setVisible(true);
 
-        gui.loadNewImage("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
+        // gui.loadNewImage("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
     }
 
     
