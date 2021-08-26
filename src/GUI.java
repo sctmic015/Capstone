@@ -38,6 +38,7 @@ public class GUI extends JFrame{
         groupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO: group button clicked
+                imagePanel.colorDifferentFractures();
             }
         });
         findButton.addActionListener(new java.awt.event.ActionListener() {
