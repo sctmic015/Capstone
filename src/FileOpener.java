@@ -1,0 +1,30 @@
+import javax.swing.*;
+import java.awt.*;
+
+public class FileOpener extends JFrame{
+
+
+    public FileOpener() {
+    }
+
+
+    public String getFileFromUser() {
+        this.setVisible(true);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setMultiSelectionEnabled(false); // allow selection of multiple files
+        // fileChooser.setFileFilter(new PDFFilter()); // only accept .pdf
+        fileChooser.setAcceptAllFileFilterUsed(false); // remove all files option
+        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        fileChooser.setPreferredSize(new Dimension((int)(dim.width*.6),(int)(dim.height*.8)));
+        int returnVal = fileChooser.showDialog(this, "Open image");
+        if (returnVal==0) {
+            return fileChooser.getSelectedFile().getPath();
+        }else{
+            return null;
+        }
+    }
+
+
+
+
+}
