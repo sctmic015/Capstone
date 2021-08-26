@@ -45,6 +45,7 @@ public class FractureVoxel {
      * @return boolean True if it is a neighbour, False if it isn't or they the same voxel
      */
     public boolean isNeighbourVoxel(FractureVoxel neighbourVoxel){
+        // TODO: add z plane
         if (neighbourVoxel.getX() - this.getX() >= -1 && neighbourVoxel.getX() - this.getX() <= 1 && 
             neighbourVoxel.getY() - this.getY() >= -1 && neighbourVoxel.getY() - this.getY() <= 1) {
                 if (neighbourVoxel.getX() == this.getX() && neighbourVoxel.getY() == this.getY()) {
