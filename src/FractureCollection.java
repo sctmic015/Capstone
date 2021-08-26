@@ -105,6 +105,14 @@ public class FractureCollection {
         }
     }
 
+    /**
+     * Returns Fracture list from Colelction class
+     * @return Color color of the fracture 
+     */
+    
+    public Fracture returnFractureList(){
+        return this.returnFractureList();
+    }
 }
 
 
