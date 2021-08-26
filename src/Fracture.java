@@ -68,5 +68,13 @@ public class Fracture {
     public Color getColor() {
         return color;
     }
+
+    /**
+     * Sets Color of fracture
+     * @param color
+     */
+    public void setColor(Color color){
+        this.color = color;
+    }
     
 }
