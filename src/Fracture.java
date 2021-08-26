@@ -13,7 +13,7 @@ public class Fracture {
      * Basic constructor
      */
     public Fracture() {
-        color = new Color(255,0,0,255); // defualt to red
+        color = new Color(255,0,0,255); // default to red
     }
 
     /**
@@ -46,8 +46,8 @@ public class Fracture {
 
     /**
      * Checks if given fracture voxel is in the fracture
-     * @param fractureVoxel Fracture voxel to look up 
-     * @return true if fracture contains the voxel, false otherwise
+     * @param fractureVoxelToCheck Fracture voxel to look up 
+     * @return boolean true if fracture contains the voxel, false otherwise
      */
     public boolean containsFractureVoxel(FractureVoxel fractureVoxelToCheck){
         return fractureVoxels.contains(fractureVoxelToCheck);
@@ -71,7 +71,7 @@ public class Fracture {
 
     /**
      * Sets Color of fracture
-     * @param color
+     * @param color Colour for the fracture 
      */
     public void setColor(Color color){
         this.color = color;
