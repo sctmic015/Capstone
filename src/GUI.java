@@ -8,6 +8,7 @@ public class GUI extends JFrame{
 	static int frameY = 900;
     // Instance variables
     private javax.swing.JButton findButton;
+    private javax.swing.JButton fileButton;
     private javax.swing.JButton groupButton;
     private ImagePanel imagePanel; // custom JPanel 
 
@@ -17,7 +18,20 @@ public class GUI extends JFrame{
     public GUI() {
         this.setupGUI();
     }
+
+
+    /**
+     * Entry point for the program 
+     */
+    public static void main(String[] args) {
+        GUI gui = new GUI();
+        gui.setVisible(true);
+
+        gui.loadNewImage("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
+    }
+
     
+
     /**
      * Used to setup the user interface ]
      * 
@@ -27,6 +41,7 @@ public class GUI extends JFrame{
         // Setup 
         imagePanel = new ImagePanel();
         findButton = new javax.swing.JButton();
+        fileButton = new javax.swing.JButton();
         groupButton = new javax.swing.JButton();
         // Window behaviour
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -37,13 +52,19 @@ public class GUI extends JFrame{
         // Buttons - ActionListeners
         groupButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO: group button clicked
                 imagePanel.colorDifferentFractures();
+            }
+        });
+        fileButton.setText("Open file");
+        fileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // TODO: file button clicked
+                FileOpener fileOpener = new FileOpener();
+                loadNewImage(fileOpener.getFileFromUser());
             }
         });
         findButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO: find button clicked
                 imagePanel.findFractures();
             }
         });
@@ -53,25 +74,28 @@ public class GUI extends JFrame{
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(fileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(60, 60, 60)
                         .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(150, 150, 150))
+                    .addComponent(imagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
+                .addContainerGap()
                 .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         // Render neatly
         pack();
@@ -79,24 +103,25 @@ public class GUI extends JFrame{
 
 
     /**
-     * Entry point for the program 
+     * Loads new image into GUI given file path 
+     * @param filePath Path to .pgm image file 
+     * @return boolean True if successfull, false otherwise
      */
-    public static void main(String[] args) {
-        try {
-            GUI gui = new GUI();
-            gui.setVisible(true);
-
-            // int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/ellipse512_18/test-D512-V6141-F14-281.pgm");
-            int imageData[][] = readPGM("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
-            CTImageSlice imageSlice = new CTImageSlice(38, imageData);
-
-            gui.displayImageSlice(imageSlice);            
-            // ArrayList<FractureVoxel> fractureVoxels = imageSlice.findFractureVoxels();
-
-            
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+    private boolean loadNewImage(String filePath) {
+        if (filePath != null) {
+            int imageData[][];
+            try {
+                imageData = readPGM(filePath);
+                CTImageSlice imageSlice = new CTImageSlice(38, imageData);
+                this.displayImageSlice(imageSlice); 
+                return true;
+            } catch (IOException e) {
+                // TODO error reading in file
+                e.printStackTrace();
+                return false;
+            }
+        }else{
+            return false;
         }
     }
 
@@ -163,6 +188,8 @@ public class GUI extends JFrame{
      * @param imageSlice
      */
     public void displayImageSlice(CTImageSlice imageSlice) {
+        imagePanel.clearOverlay();
         imagePanel.setImageSlice(imageSlice);
     }
+
 }
