@@ -56,6 +56,7 @@ public class FractureCollection {
     public ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
         for (FractureVoxel fractureVoxel : fractureVoxels) {
             for (FractureVoxel fractureVoxelNeighbour : fractureVoxels) {
+                // TODO: no neighbour case
                 if (fractureVoxel.isNeighbourVoxel(fractureVoxelNeighbour)) {
                     if (!fractureVoxelNeighbour.hasAssignedFracture()) {
                         if (!fractureVoxel.hasAssignedFracture()) {
