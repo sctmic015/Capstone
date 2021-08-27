@@ -9,6 +9,7 @@ public class FileOpener extends JFrame{
 
 
     public String getFileFromUser() {
+        // TODO: destory entire frame on close
         this.setVisible(true);
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(false); // allow selection of multiple files
@@ -18,8 +19,10 @@ public class FileOpener extends JFrame{
         fileChooser.setPreferredSize(new Dimension((int)(dim.width*.6),(int)(dim.height*.8)));
         int returnVal = fileChooser.showDialog(this, "Open image");
         if (returnVal==0) {
+            this.dispose();
             return fileChooser.getSelectedFile().getPath();
         }else{
+            this.dispose();
             return null;
         }
     }
