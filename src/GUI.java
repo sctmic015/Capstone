@@ -1,5 +1,3 @@
-import java.io.*;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class GUI extends JFrame{
@@ -11,11 +9,14 @@ public class GUI extends JFrame{
     private javax.swing.JButton loadImagesButton;
     private javax.swing.JSlider imageSlider;
     private ImagePanel imagePanel; // custom JPanel 
+    private CTImageStack imageStack;
+    private FileHandler fileHandler;
 
     /**
      * Constructor that sets up basic UI 
      */
     public GUI() {
+        this.fileHandler = new FileHandler(this);
         this.setupGUI();
     }
 
@@ -54,7 +55,9 @@ public class GUI extends JFrame{
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO: file button clicked
                 FileOpener fileOpener = new FileOpener();
-                loadNewImage(fileOpener.getFileFromUser());
+                try {
+                    fileHandler.loadImages(fileOpener.getFilesFromUser());
+                } catch (Exception e) {}
             }
         });
         detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
@@ -102,82 +105,26 @@ public class GUI extends JFrame{
     }
 
 
+
     /**
-     * Loads new image into GUI given file path 
-     * @param filePath Path to .pgm image file 
-     * @return boolean True if successfull, false otherwise
+     * Sets image stack this GUI is responsible for
+     * and displays first image in the stack 
+     * @param imageStack image stack to associate with this gui 
      */
-    private boolean loadNewImage(String filePath) {
-        if (filePath != null) {
-            int imageData[][];
-            try {
-                imageData = readPGM(filePath);
-                CTImageSlice imageSlice = new CTImageSlice(38, imageData);
-                this.displayImageSlice(imageSlice); 
-                return true;
-            } catch (IOException e) {
-                // TODO error reading in file
-                e.printStackTrace();
-                return false;
-            }
-        }else{
-            return false;
+    public void setImageStack(CTImageStack imageStack) {
+        if (imageStack != null) {
+            this.imageStack=imageStack;
+            this.displayImageSlice(imageStack.getImageSlice(0)); 
         }
     }
 
     /**
-     * Method to read PGM pixel values into a 2D integer Array
-     * @param fileName
-     * @return Integer array of pixel values
-     * @throws IOException
-     * Code adapted from somewhere on stackoverflow
+     * Gets image stack this GUI is responsible for
      */
-    public static int[][] readPGM(String fileName) throws IOException {
-        String filePath = fileName;
-        FileInputStream fileInputStream = new FileInputStream(filePath);
-        Scanner scan = new Scanner(fileInputStream);
-        // Discard the magic number
-        scan.nextLine();
-        // Discard the comment line
-        scan.nextLine();
-        // Read pic width, height and max value
-        int picWidth = scan.nextInt();
-        int picHeight = scan.nextInt();
-        // int maxvalue = scan.nextInt();
-        scan.nextInt();
-
-        scan.close();
-        fileInputStream.close();
-
-        fileInputStream = new FileInputStream(filePath);
-        DataInputStream dis = new DataInputStream(fileInputStream);
-
-        // look for 4 lines (i.e.: the header) and discard them
-        int numnewlines = 4;
-        while (numnewlines > 0) {
-            char c;
-            do {
-                c = (char)(dis.readUnsignedByte());
-            } while (c != '\n');
-            numnewlines--;
-        }
-
-        int[][] imageData = new int[picHeight][picWidth]; // 2D array storing image colour values 
-        for (int row = 0; row < picHeight; row++) {
-            for (int col = 0; col < picWidth; col++) {
-                imageData[row][col] = dis.readUnsignedByte();
-                /*
-                if(imageData[row][col] > 200){
-                // if(imageData[row][col] != 0 && imageData[row][col] != 200){
-                    System.out.print(imageData[row][col] + " ");
-                }
-                */
-            }
-            // System.out.println();
-        }
-
-        return imageData;
+    public CTImageStack getImageStack() {
+        return imageStack;
     }
+
 
     /**
      * Displays given image slice on GUI 
@@ -187,7 +134,7 @@ public class GUI extends JFrame{
      * Note: ImagePanel will automatically repaint/refresh the panel
      * @param imageSlice
      */
-    public void displayImageSlice(CTImageSlice imageSlice) {
+    private void displayImageSlice(CTImageSlice imageSlice) {
         imagePanel.clearOverlay();
         imagePanel.setImageSlice(imageSlice);
     }
