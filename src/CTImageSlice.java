@@ -4,6 +4,7 @@
  */
 import java.awt.image.*;
 import java.awt.*;
+import java.io.File;
 
 public class CTImageSlice {
 
@@ -40,7 +41,21 @@ public class CTImageSlice {
         this.yDimension = imageData.length;
         deriveImage();
     }
-
+    
+    /**
+     * Contructor when image data has been extracted
+     * @param zCoOrd position in stack of images (i.e., The images Z co-ordinate)
+     * @param imageData Image data represented as a 2D array
+     */
+    public CTImageSlice(int zCoOrd, File imageFile){
+        this.zCoOrd = zCoOrd;
+        this.imageData = FileHandler.readPGM(imageFile);
+        // calculated from image data
+        this.xDimension = imageData.length;
+        this.yDimension = imageData.length;
+        deriveImage();
+    }
+    
     /**
      * Generates greyscale image representation of image slice
      */
