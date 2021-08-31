@@ -28,8 +28,12 @@ public class FileHandler {
      * Loads new set of image files into GUI given an array of files 
      * @param files Array of PGM image files to load in 
      * @return boolean True if successfull, false otherwise
+     * @throws Exception Exception if no gui instance variable is set or its null 
      */
-    public boolean loadImages(File[] files) {
+    public boolean loadImages(File[] files) throws Exception{
+        if (gui == null) {
+            throw new Exception("No GUI attached to FileHandler");
+        }
         if (files != null) {
             gui.setImageStack( new CTImageStack(files) );
             return true;
