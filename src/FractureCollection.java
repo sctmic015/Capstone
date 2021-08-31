@@ -6,6 +6,7 @@ public class FractureCollection {
 
     /**
      * Create fracture collection from Fracture voxels
+     * and detect fracture groups
      * @param fractureVoxels
      */
     public FractureCollection(ArrayList<FractureVoxel> fractureVoxels) {
