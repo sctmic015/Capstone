@@ -54,7 +54,7 @@ public class GUI extends JFrame{
         loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO: file button clicked
-                FileOpener fileOpener = new FileOpener();
+                FileInputDialog fileOpener = new FileInputDialog();
                 try {
                     fileHandler.loadImages(fileOpener.getFilesFromUser());
                 } catch (Exception e) {}

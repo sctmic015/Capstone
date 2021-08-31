@@ -3,10 +3,10 @@ import java.awt.*;
 import java.io.File;
 
 
-public class FileOpener extends JFrame{
+public class FileInputDialog extends JFrame{
 
 
-    public FileOpener() {
+    public FileInputDialog() {
     }
 
 
@@ -18,7 +18,7 @@ public class FileOpener extends JFrame{
         // TODO: destory entire frame on close
         this.setVisible(true);
         JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setMultiSelectionEnabled(false); // allow selection of multiple files
+        fileChooser.setMultiSelectionEnabled(true); // allow selection of multiple files
         fileChooser.setFileFilter(new PGMFilenameFilter()); // only accept .pgm 
         fileChooser.setAcceptAllFileFilterUsed(true); // remove all files option
         // Adjust size of file chooser popup
@@ -28,13 +28,17 @@ public class FileOpener extends JFrame{
         int returnVal = fileChooser.showDialog(this, "Load images");
         if (returnVal==0) {
             this.dispose();
+            if (fileChooser.getSelectedFile() != null && fileChooser.getSelectedFiles() == null) {
+                File[] result = new File[1];
+                result[0]=fileChooser.getSelectedFile();
+                return result;
+            }
             return fileChooser.getSelectedFiles();
         }else{
             this.dispose();
             return null;
         }
     }
-
 
 
 
