@@ -1,5 +1,3 @@
-import java.io.*;
-import java.util.Scanner;
 import javax.swing.*;
 
 public class GUI extends JFrame{
@@ -7,15 +5,18 @@ public class GUI extends JFrame{
     static int frameX = 900;
 	static int frameY = 900;
     // Instance variables
-    private javax.swing.JButton findButton;
-    private javax.swing.JButton fileButton;
-    private javax.swing.JButton groupButton;
+    private javax.swing.JButton detectFracturesButton;
+    private javax.swing.JButton loadImagesButton;
+    private javax.swing.JSlider imageSlider;
     private ImagePanel imagePanel; // custom JPanel 
+    private CTImageStack imageStack;
+    private FileHandler fileHandler;
 
     /**
      * Constructor that sets up basic UI 
      */
     public GUI() {
+        this.fileHandler = new FileHandler(this);
         this.setupGUI();
     }
 
@@ -40,34 +41,35 @@ public class GUI extends JFrame{
     public void setupGUI() {
         // Setup 
         imagePanel = new ImagePanel();
-        findButton = new javax.swing.JButton();
-        fileButton = new javax.swing.JButton();
-        groupButton = new javax.swing.JButton();
+        detectFracturesButton = new javax.swing.JButton();
+        loadImagesButton = new javax.swing.JButton();
+        imageSlider = new javax.swing.JSlider();
         // Window behaviour
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VFDS");
         // Buttons
-        findButton.setText("Find");
-        groupButton.setText("Group");
+        detectFracturesButton.setText("Detect fractures");
+        loadImagesButton.setText("Load images");
         // Buttons - ActionListeners
-        groupButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imagePanel.colorDifferentFractures();
-            }
-        });
-        fileButton.setText("Open file");
-        fileButton.addActionListener(new java.awt.event.ActionListener() {
+        loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO: file button clicked
-                FileOpener fileOpener = new FileOpener();
-                loadNewImage(fileOpener.getFileFromUser());
+                FileInputDialog fileOpener = new FileInputDialog();
+                try {
+                    fileHandler.loadImages(fileOpener.getFilesFromUser());
+                } catch (Exception e) {}
             }
         });
-        findButton.addActionListener(new java.awt.event.ActionListener() {
+        detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imagePanel.findFractures();
+                imagePanel.findFractures(); // detects fractures + colours them 
             }
         });
+        // ImageSlider Setup
+        imageSlider.setMajorTickSpacing(127);
+        imageSlider.setMaximum(1);
+        imageSlider.setOrientation(javax.swing.JSlider.VERTICAL);
+        imageSlider.setValue(0);
         // Layout - Outter window
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -75,26 +77,27 @@ public class GUI extends JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(fileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(60, 60, 60)
-                        .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(imagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(imageSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(imageSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(findButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(fileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(groupButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         // Render neatly
@@ -102,82 +105,26 @@ public class GUI extends JFrame{
     }
 
 
+
     /**
-     * Loads new image into GUI given file path 
-     * @param filePath Path to .pgm image file 
-     * @return boolean True if successfull, false otherwise
+     * Sets image stack this GUI is responsible for
+     * and displays first image in the stack 
+     * @param imageStack image stack to associate with this gui 
      */
-    private boolean loadNewImage(String filePath) {
-        if (filePath != null) {
-            int imageData[][];
-            try {
-                imageData = readPGM(filePath);
-                CTImageSlice imageSlice = new CTImageSlice(38, imageData);
-                this.displayImageSlice(imageSlice); 
-                return true;
-            } catch (IOException e) {
-                // TODO error reading in file
-                e.printStackTrace();
-                return false;
-            }
-        }else{
-            return false;
+    public void setImageStack(CTImageStack imageStack) {
+        if (imageStack != null) {
+            this.imageStack=imageStack;
+            this.displayImageSlice(imageStack.getImageSlice(0)); 
         }
     }
 
     /**
-     * Method to read PGM pixel values into a 2D integer Array
-     * @param fileName
-     * @return Integer array of pixel values
-     * @throws IOException
-     * Code adapted from somewhere on stackoverflow
+     * Gets image stack this GUI is responsible for
      */
-    public static int[][] readPGM(String fileName) throws IOException {
-        String filePath = fileName;
-        FileInputStream fileInputStream = new FileInputStream(filePath);
-        Scanner scan = new Scanner(fileInputStream);
-        // Discard the magic number
-        scan.nextLine();
-        // Discard the comment line
-        scan.nextLine();
-        // Read pic width, height and max value
-        int picWidth = scan.nextInt();
-        int picHeight = scan.nextInt();
-        // int maxvalue = scan.nextInt();
-        scan.nextInt();
-
-        scan.close();
-        fileInputStream.close();
-
-        fileInputStream = new FileInputStream(filePath);
-        DataInputStream dis = new DataInputStream(fileInputStream);
-
-        // look for 4 lines (i.e.: the header) and discard them
-        int numnewlines = 4;
-        while (numnewlines > 0) {
-            char c;
-            do {
-                c = (char)(dis.readUnsignedByte());
-            } while (c != '\n');
-            numnewlines--;
-        }
-
-        int[][] imageData = new int[picHeight][picWidth]; // 2D array storing image colour values 
-        for (int row = 0; row < picHeight; row++) {
-            for (int col = 0; col < picWidth; col++) {
-                imageData[row][col] = dis.readUnsignedByte();
-                /*
-                if(imageData[row][col] > 200){
-                // if(imageData[row][col] != 0 && imageData[row][col] != 200){
-                    System.out.print(imageData[row][col] + " ");
-                }
-                */
-            }
-            // System.out.println();
-        }
-
-        return imageData;
+    public CTImageStack getImageStack() {
+        return imageStack;
     }
+
 
     /**
      * Displays given image slice on GUI 
@@ -187,7 +134,7 @@ public class GUI extends JFrame{
      * Note: ImagePanel will automatically repaint/refresh the panel
      * @param imageSlice
      */
-    public void displayImageSlice(CTImageSlice imageSlice) {
+    private void displayImageSlice(CTImageSlice imageSlice) {
         imagePanel.clearOverlay();
         imagePanel.setImageSlice(imageSlice);
     }

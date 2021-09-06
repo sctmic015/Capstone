@@ -82,21 +82,12 @@ public class ImagePanel extends JPanel{
         if (imageSlice != null) {
             // Fracture collection 
             fractureCollection = new FractureCollection(fractureVoxels);
-            overlayImage = fractureCollection.getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
-            repaint();
-        }
-    }
-
-    /**
-     * Adds colour to the different fractures
-     */
-    public void colorDifferentFractures() {
-        if (imageSlice != null) {
             ColourBuilder.assignColorsToFractures(fractureCollection.getFractures(fractureVoxels));
             overlayImage = fractureCollection.getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
             repaint();
         }
     }
+
 
     /**
      * Clears the entire image panel canvas
