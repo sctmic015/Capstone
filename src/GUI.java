@@ -40,7 +40,7 @@ public class GUI extends JFrame{
      */
     public void setupGUI() {
         // Setup 
-        imagePanel = new ImagePanel();
+        imagePanel = new ImagePanel(imageStack);
         detectFracturesButton = new javax.swing.JButton();
         loadImagesButton = new javax.swing.JButton();
         imageSlider = new javax.swing.JSlider();
@@ -62,7 +62,7 @@ public class GUI extends JFrame{
         });
         detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imagePanel.findFractures(); // detects fractures + colours them 
+                imagePanel.showFractures(); // detects fractures + colours them 
             }
         });
         // ImageSlider Setup
@@ -77,7 +77,7 @@ public class GUI extends JFrame{
             System.out.println(sliceSelected);
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
-                this.displayImageSlice(imageStack.getImageSlice(sliceSelected)); 
+                this.displayImageSlice(sliceSelected);
             }
         });
 
@@ -125,9 +125,10 @@ public class GUI extends JFrame{
     public void setImageStack(CTImageStack imageStack) {
         if (imageStack != null) {
             this.imageStack=imageStack;
+            this.imagePanel.setImageStack(imageStack);
             imageSlider.setEnabled(true); // enable slider
             this.imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize()-1); // set slider scale to no. CTImageSlices
-            this.displayImageSlice(imageStack.getImageSlice(0)); // display first slice in stack 
+            this.displayImageSlice(0); // display first slice in stack 
         }
     }
 
@@ -140,16 +141,14 @@ public class GUI extends JFrame{
 
 
     /**
-     * Displays given image slice on GUI 
-     * It takes the image slice and passes it to the ImagePanel, 
-     * which handles the actual rendering.
+     * Displays given image slice number (determined by zCoOrd) on GUI 
+     * The ImagePanel handles the actual rendering.
      * 
      * Note: ImagePanel will automatically repaint/refresh the panel
-     * @param imageSlice
+     * @param zCoOrd 
      */
-    private void displayImageSlice(CTImageSlice imageSlice) {
-        imagePanel.clearOverlay();
-        imagePanel.setImageSlice(imageSlice);
+    private void displayImageSlice(int zCoOrd) {
+        imagePanel.displaySlice(zCoOrd);
     }
 
 }
