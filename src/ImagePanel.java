@@ -6,10 +6,10 @@ import java.util.ArrayList;
 public class ImagePanel extends JPanel{
     private static final int PANEL_SIZE = 600;
     // Instance variables 
+    private CTImageStack imageStack;
+    private boolean showFractures=false; // true: colour fractures
     private CTImageSlice imageSlice;
     private BufferedImage overlayImage;
-    private FractureCollection fractureCollection;
-    private ArrayList<FractureVoxel> fractureVoxels;
 
     /**
      * Basic constructor that intializes empty image panel
@@ -23,10 +23,9 @@ public class ImagePanel extends JPanel{
      * This image slice is stored and rendered (through swing)
      * @param imageSlice
      */
-    public ImagePanel(CTImageSlice imageSlice) {
+    public ImagePanel(CTImageStack imageStack) {
         setupPanelBasics();
-        this.imageSlice = imageSlice;
-        fractureVoxels = Dectection.findFractureVoxels(imageSlice); // detect fracture voxels 
+        this.imageStack = imageStack;
     }
 
     /**
@@ -58,7 +57,7 @@ public class ImagePanel extends JPanel{
                 g.drawImage(imageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0), 0, 0, null);
             }
             // draw the overlay image to show fracture colours 
-            if (overlayImage != null) {
+            if (showFractures && overlayImage != null) {
                 g.drawImage(overlayImage.getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0), 0, 0, null);
             }
         }
@@ -68,31 +67,46 @@ public class ImagePanel extends JPanel{
      * Adds CTImageSlice to image panel and repaints panel
      * @param imageSlice CTImageSlice The image slice to paint in this panel
      */
-    public void setImageSlice(CTImageSlice imageSlice) {
-        // clearOverlay();
+    private void setImageSlice(CTImageSlice imageSlice) {
         this.imageSlice = imageSlice;
-        fractureVoxels = Dectection.findFractureVoxels(imageSlice); // detect fracture voxels 
+        overlayImage = imageStack.getFractures().getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
         repaint();
     }
 
     /**
+     * Clears the entire image panel canvas
+     */
+    private void clearOverlay() {
+        overlayImage = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
+    }
+
+    /**
+     * Sets the imageStack which this ImagePanel will represent 
+     * @param imageStack
+     */
+    public void setImageStack(CTImageStack imageStack) {
+        this.imageStack = imageStack;
+    }
+
+    /**
+     * Displays CTImageSlice in CTImageStack given the zCoOrd / layer number 
+     * @param zCoOrd zCoOrd of CTImageSlice 
+     */
+    public void displaySlice(int zCoOrd) {
+        this.clearOverlay();
+        this.setImageSlice( imageStack.getImageSlice(zCoOrd) );
+    }
+    
+    /**
      * Dectects fractures on CTImageSlice and displays them
      */
-    public void findFractures() {
-        if (imageSlice != null) {
+    public void showFractures() {
+        showFractures = true;
+        if (imageStack != null) {
             // Fracture collection 
-            fractureCollection = new FractureCollection(fractureVoxels);
-            ColourBuilder.assignColorsToFractures(fractureCollection.getFractures(fractureVoxels));
-            overlayImage = fractureCollection.getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
+            overlayImage = imageStack.getFractures().getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
             repaint();
         }
     }
 
-
-    /**
-     * Clears the entire image panel canvas
-     */
-    public void clearOverlay() {
-        overlayImage = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
-    }
 }
