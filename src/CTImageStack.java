@@ -6,17 +6,19 @@ import java.util.ArrayList;
  */
 public class CTImageStack {
     private ArrayList<CTImageSlice> imageSlices;
+    private int numSlices; // stores number of slices/layers/z-planes in stack (should be 127)
 
     /**
-     * Constructor that takes array of image files and 
+     * Constructor that takes an arraylist of image files and 
      * creates and adds ImageSlices
-     * @param files
+     * @param files ArrayList of files 
      */
-    public CTImageStack(File[] files) {
+    public CTImageStack(ArrayList<File> files) {
         imageSlices=new ArrayList<CTImageSlice>();
-        for (int i = 0; i < files.length; i++) {
-            imageSlices.add(new CTImageSlice(i,files[i]));
+        for (int i = 0; i < files.size(); i++) {
+            imageSlices.add( new CTImageSlice(i,files.get(i)) );
         }
+        numSlices = files.size();
     }
 
 
@@ -32,6 +34,14 @@ public class CTImageStack {
         else{
             return null;
         }
+    }
+
+    /**
+     * Gets the number of slices in the CTStack
+     * @return int number of slices in the CTStack
+     */
+    public int getSize() {
+        return numSlices;
     }
 
 }

@@ -23,7 +23,7 @@ public class Dectection {
                     ){
                         fractureVoxels.add(new FractureVoxel(imageSlice.getZCoOrd(), y, x));
                         //System.out.print(imageData[x][y]);
-                        System.out.println("X-coOrd: " + y + " Y-coOrd: " + x);  // For some reason x and y are confused lol
+                        // System.out.println("X-coOrd: " + y + " Y-coOrd: " + x);  // For some reason x and y are confused lol
                     }
             }
             //System.out.println();
