@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
-import java.security.cert.CertPathValidatorException.Reason;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,7 +12,6 @@ public class FileInputDialog extends JFrame{
 
     public FileInputDialog() {
     }
-
 
     /**
      * Displays filechooser popup to user to let them load .pgm images 
