@@ -66,10 +66,21 @@ public class GUI extends JFrame{
             }
         });
         // ImageSlider Setup
-        imageSlider.setMajorTickSpacing(127);
-        imageSlider.setMaximum(1);
+        imageSlider.setMinimum(0);
+        imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
         imageSlider.setOrientation(javax.swing.JSlider.VERTICAL);
         imageSlider.setValue(0);
+        imageSlider.setEnabled(false);
+        imageSlider.addChangeListener(e -> 
+        {
+            int sliceSelected = imageSlider.getValue();
+            System.out.println(sliceSelected);
+            if (imageStack != null) {
+                imageSlider.setEnabled(true);
+                this.displayImageSlice(imageStack.getImageSlice(sliceSelected)); 
+            }
+        });
+
         // Layout - Outter window
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,7 +125,9 @@ public class GUI extends JFrame{
     public void setImageStack(CTImageStack imageStack) {
         if (imageStack != null) {
             this.imageStack=imageStack;
-            this.displayImageSlice(imageStack.getImageSlice(0)); 
+            imageSlider.setEnabled(true); // enable slider
+            this.imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize()-1); // set slider scale to no. CTImageSlices
+            this.displayImageSlice(imageStack.getImageSlice(0)); // display first slice in stack 
         }
     }
 
