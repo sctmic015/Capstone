@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class CTImageStack {
     private ArrayList<CTImageSlice> imageSlices;
     private int numSlices; // stores number of slices/layers/z-planes in stack (should be 127)
+    private FractureCollection fractures;
 
     /**
      * Constructor that takes an arraylist of image files and 
@@ -44,4 +45,30 @@ public class CTImageStack {
         return numSlices;
     }
 
+
+    /**
+     * Runs detection on all CTImageSlices in parallel 
+     * to find fracture voxels and join them into fractures 
+     */
+    public void detectFractures() {
+        // TODO: do in parallel 
+        ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
+        for (CTImageSlice imageSlice : imageSlices) {
+            allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
+        }
+        fractures = new FractureCollection(allFractureVoxels);
+    }
+
+    /**
+     * Gets fracture collection for this image stack 
+     * If the fractures havent been detected yet, it will 
+     * trigger detection 
+     * @return FractureCollection fractures for this image stack
+     */
+    public FractureCollection getFractures() {
+        if (fractures == null) {
+            detectFractures();
+        }
+        return fractures;
+    }
 }

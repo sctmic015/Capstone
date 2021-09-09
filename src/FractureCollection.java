@@ -11,6 +11,7 @@ public class FractureCollection {
      */
     public FractureCollection(ArrayList<FractureVoxel> fractureVoxels) {
         getFractures(fractureVoxels);
+        ColourBuilder.assignColorsToFractures(this.fractures);
     }
     
 
@@ -105,14 +106,7 @@ public class FractureCollection {
         }
     }
 
-    /**
-     * Returns Fracture list from Colelction class
-     * @return Color color of the fracture 
-     */
-    
-    public Fracture returnFractureList(){
-        return this.returnFractureList();
-    }
+
 }
 
 
