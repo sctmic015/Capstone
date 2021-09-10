@@ -1,3 +1,4 @@
+package VFDS;
 import java.util.*;
 
 public class Smoothing {

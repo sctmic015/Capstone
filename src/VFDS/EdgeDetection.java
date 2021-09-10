@@ -1,4 +1,4 @@
-import java.util.Arrays;
+package VFDS;
 
 public class EdgeDetection {
     int[][] Mx = new int[][]{{-1, 0, 1},

@@ -1,7 +1,7 @@
+package VFDS;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
-import java.util.ArrayList;
 
 public class ImagePanel extends JPanel{
     private static final int PANEL_SIZE = 600;
