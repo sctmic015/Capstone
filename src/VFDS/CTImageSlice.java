@@ -1,12 +1,13 @@
-/** 
- * A class representing a CT image slice object
- * @author SCTMIC015, SMTJUL022, BLRDAV002
- */
+package VFDS;
 import java.awt.image.*;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
+/** 
+ * A class representing a CT image slice object
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class CTImageSlice {
 
     private int zCoOrd;
