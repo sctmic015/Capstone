@@ -5,6 +5,7 @@
 import java.awt.image.*;
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 
 public class CTImageSlice {
 
@@ -13,8 +14,8 @@ public class CTImageSlice {
     private int yDimension;
     private int[][] imageData;
     private BufferedImage image; // RGB image representation of data
-    final int threshold = 120;   // Threshold for determining if a voxel is a fracture. To be determined analytically later
-
+    private ArrayList<FractureVoxel> fractureVoxels;
+    
     /**
      * Contructor when no image data has been extracted but image dimensions are known
      * @param zCoOrd position in stack of images (i.e., The images Z co-ordinate)
@@ -53,6 +54,7 @@ public class CTImageSlice {
         // calculated from image data
         this.xDimension = imageData.length;
         this.yDimension = imageData.length;
+        this.detectFractureVoxels(); // do fracture voxel dectection at loadtime 
         deriveImage();
     }
     
@@ -103,5 +105,26 @@ public class CTImageSlice {
         return this.imageData;
     }
 
+    /**
+     * Gets the fracture voxels for this CTImageSlice 
+     * Does not redectect if dectection has already been done 
+     * to prevent double computation 
+     * @return ArrayList of the fracture voxels for this CTImageSlice
+     */
+    public ArrayList<FractureVoxel> getFractureVoxels() {
+        if (fractureVoxels==null) {
+            this.detectFractureVoxels();
+        }
+        return fractureVoxels;
+    }
+
+    /**
+     * Runs dectection on CTImageSlice to get fracture voxels
+     * 
+     * NOTE: Fracture detection is not done in this class  
+     */
+    private void detectFractureVoxels() {
+        fractureVoxels = Dectection.findFractureVoxels(this);
+    }
 
 }

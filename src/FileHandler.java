@@ -2,6 +2,7 @@
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -30,7 +31,7 @@ public class FileHandler {
      * @return boolean True if successfull, false otherwise
      * @throws Exception Exception if no gui instance variable is set or its null 
      */
-    public boolean loadImages(File[] files) throws Exception{
+    public boolean loadImages(ArrayList<File> files) throws Exception{
         if (gui == null) {
             throw new Exception("No GUI attached to FileHandler");
         }
