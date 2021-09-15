@@ -1,5 +1,7 @@
 package VFDS;
 import javax.swing.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame{
     // Dimensions of GUI window
@@ -28,8 +30,6 @@ public class GUI extends JFrame{
     public static void main(String[] args) {
         GUI gui = new GUI();
         gui.setVisible(true);
-
-        // gui.loadNewImage("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross38.pgm");
     }
 
     
@@ -54,7 +54,6 @@ public class GUI extends JFrame{
         // Buttons - ActionListeners
         loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                // TODO: file button clicked
                 FileInputDialog fileOpener = new FileInputDialog();
                 try {
                     fileHandler.loadImages(fileOpener.getFilesFromUser());
@@ -81,7 +80,33 @@ public class GUI extends JFrame{
                 this.displayImageSlice(sliceSelected);
             }
         });
+        // Mouse listner - gets fractures on click
+		imagePanel.addMouseListener(new MouseListener(){
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int mouseX=e.getX();
+				int mouseY=e.getY();
+                // As the image is scaled you have to adjust for this to get the right 
+                // x/y co-ordinate in the CTImageSlice's array 
+                double scaleFactor = (double)imagePanel.getPanelSize() / (double)imagePanel.getImageSlice().getXDimension();
+                int xCoOrd = (int) Math.round(mouseX/scaleFactor);
+                int yCoOrd = (int) Math.round(mouseY/scaleFactor);
+                // Fracture selectedFracture;
+                imagePanel.getImageSlice().getFractureVoxels().forEach((voxel) -> {
+                    int curserBuffer = 4;
+                    if ( Math.abs(voxel.getX()-xCoOrd) <= curserBuffer && Math.abs(voxel.getY()-yCoOrd) <= curserBuffer ){
+                        // NOTE: uses scaled ref. 
+                        // TODO: test this algorithm is correct 
+                        System.out.println( voxel.getAssignedFracture() );
+                    }
+                });
+			}
+			public void mousePressed(MouseEvent e){};
+			public void mouseReleased(MouseEvent e){};
+			public void mouseEntered(MouseEvent e){};
+			public void mouseExited(MouseEvent e){};
 
+		});
         // Layout - Outter window
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

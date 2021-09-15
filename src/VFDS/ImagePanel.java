@@ -19,13 +19,13 @@ public class ImagePanel extends JPanel{
     }
 
     /**
-     * Constructor for image panel that takes in an image slice
-     * This image slice is stored and rendered (through swing)
-     * @param imageSlice
+     * Constructor for image panel that takes in an image stacl
+     * This image stack is stored and rendered (through swing)
+     * @param imageStack 
      */
     public ImagePanel(CTImageStack imageStack) {
         setupPanelBasics();
-        this.imageStack = imageStack;
+        this.setImageStack(imageStack);
     }
 
     /**
@@ -98,6 +98,14 @@ public class ImagePanel extends JPanel{
     }
     
     /**
+     * Gets currsent slice being displayed
+     * @return CTImageSlice current slice being displayed
+     */
+    public CTImageSlice getImageSlice() {
+        return this.imageSlice;
+    }
+
+    /**
      * Dectects fractures on CTImageSlice and displays them
      */
     public void showFractures() {
@@ -107,6 +115,14 @@ public class ImagePanel extends JPanel{
             overlayImage = imageStack.getFractures().getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
             repaint();
         }
+    }
+
+    /**
+     * Gets size of image panel in pixels 
+     * @return width of image panel 
+     */
+    public int getPanelSize() {
+        return PANEL_SIZE;
     }
 
 }

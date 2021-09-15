@@ -1,11 +1,10 @@
 package Testing;
 
 import VFDS.*;
-import java.io.File;
 // junit
 import static org.junit.Assert.assertNotNull;
-import org.junit.*;
-import org.junit.Assert.*;
+import java.io.File;
+import org.junit.Test;
 
 public class TestCTImageSlice {
 
@@ -14,8 +13,12 @@ public class TestCTImageSlice {
 
     @Test
     public void testImageRender() {
-        int[][] imageData = FileHandler.readPGM(new File("../data/1/cross77.pgm"));
+        int[][] imageData = FileHandler.readPGM(new File("/Users/david/Google Drive/Varsity/*Work/CSC 3003S/Capstone/capstone/data/1/cross77.pgm"));
         CTImageSlice imageSlice = new CTImageSlice(0, imageData);
         assertNotNull(imageSlice.getImage());
+    }
+
+    public static void main(String[] args) {
+        
     }
 }
