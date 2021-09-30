@@ -54,7 +54,9 @@ public class ImagePanel extends JPanel{
         if (imageSlice != null) {
             // draw the image slice in greyscale as an image
             if (imageSlice.getImage() != null){
-                g.drawImage(imageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0), 0, 0, null);
+                Image img = imageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0);
+                
+                g.drawImage(img, 0, 0, null);
             }
             // draw the overlay image to show fracture colours 
             if (showFractures && overlayImage != null) {
