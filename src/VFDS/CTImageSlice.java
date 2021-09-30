@@ -55,7 +55,6 @@ public class CTImageSlice {
         // calculated from image data
         this.xDimension = imageData.length;
         this.yDimension = imageData.length;
-        this.detectFractureVoxels(); // do fracture voxel dectection at loadtime 
         deriveImage();
     }
     
