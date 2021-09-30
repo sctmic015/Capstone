@@ -53,23 +53,23 @@ public class CTImageStack {
      */
     public void detectFractures() {
         // TODO: do in parallel 
-        ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
-        for (CTImageSlice imageSlice : imageSlices) {
-            allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
+        if (fractures == null) {
+            ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
+            for (CTImageSlice imageSlice : imageSlices) {
+                allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
+            }
+            fractures = new FractureCollection(allFractureVoxels);
         }
-        fractures = new FractureCollection(allFractureVoxels);
     }
 
     /**
      * Gets fracture collection for this image stack 
-     * If the fractures havent been detected yet, it will 
-     * trigger detection 
+     * 
+     * NOTE: If the fractures havent been detected yet, it will 
+     * return null  
      * @return FractureCollection fractures for this image stack
      */
     public FractureCollection getFractures() {
-        if (fractures == null) {
-            detectFractures();
-        }
         return fractures;
     }
 }

@@ -7,8 +7,7 @@ public class ImagePanel extends JPanel{
     private static final int PANEL_SIZE = 600;
     // Instance variables 
     private CTImageStack imageStack;
-    private boolean showFractures=false; // true: colour fractures
-    private CTImageSlice imageSlice;
+    private CTImageSlice currentImageSlice;
     private BufferedImage overlayImage;
 
     /**
@@ -51,15 +50,15 @@ public class ImagePanel extends JPanel{
 	@Override
     protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-        if (imageSlice != null) {
+        if (currentImageSlice != null) {
             // draw the image slice in greyscale as an image
-            if (imageSlice.getImage() != null){
-                Image img = imageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0);
-                
+            if (currentImageSlice.getImage() != null){
+                Image img = currentImageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0);
                 g.drawImage(img, 0, 0, null);
             }
             // draw the overlay image to show fracture colours 
-            if (showFractures && overlayImage != null) {
+            if (imageStack.getFractures() != null) {
+                overlayImage = imageStack.getFractures().getImage(currentImageSlice.getZCoOrd(), currentImageSlice.getImage().getWidth(), currentImageSlice.getImage().getHeight());
                 g.drawImage(overlayImage.getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0), 0, 0, null);
             }
         }
@@ -67,11 +66,10 @@ public class ImagePanel extends JPanel{
 
     /**
      * Adds CTImageSlice to image panel and repaints panel
-     * @param imageSlice CTImageSlice The image slice to paint in this panel
+     * @param currentImageSlice CTImageSlice The image slice to paint in this panel
      */
-    private void setImageSlice(CTImageSlice imageSlice) {
-        this.imageSlice = imageSlice;
-        overlayImage = imageStack.getFractures().getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
+    private void setImageSlice(CTImageSlice currentImageSlice) {
+        this.currentImageSlice = currentImageSlice;
         repaint();
     }
 
@@ -80,6 +78,7 @@ public class ImagePanel extends JPanel{
      */
     private void clearOverlay() {
         overlayImage = new BufferedImage(1,1, BufferedImage.TYPE_INT_ARGB);
+        repaint();
     }
 
     /**
@@ -104,20 +103,9 @@ public class ImagePanel extends JPanel{
      * @return CTImageSlice current slice being displayed
      */
     public CTImageSlice getImageSlice() {
-        return this.imageSlice;
+        return this.currentImageSlice;
     }
 
-    /**
-     * Dectects fractures on CTImageSlice and displays them
-     */
-    public void showFractures() {
-        showFractures = true;
-        if (imageStack != null) {
-            // Fracture collection 
-            overlayImage = imageStack.getFractures().getImage(imageSlice.getZCoOrd(), imageSlice.getImage().getWidth(), imageSlice.getImage().getHeight()); // TODO: remove hardcoded values
-            repaint();
-        }
-    }
 
     /**
      * Gets size of image panel in pixels 
