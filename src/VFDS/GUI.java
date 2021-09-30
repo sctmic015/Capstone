@@ -48,23 +48,48 @@ public class GUI extends JFrame{
         // Window behaviour
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("VFDS");
+
+
         // Buttons
         detectFracturesButton.setText("Detect fractures");
         loadImagesButton.setText("Load images");
         // Buttons - ActionListeners
+        GUI gui = this;
         loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                // disable buttons
+                detectFracturesButton.setEnabled(false);
+                loadImagesButton.setEnabled(false);
+                // Show popup
+                PopupFactory pf = new PopupFactory();
+                JPanel popupFrame = new JPanel();
+                popupFrame.add(new JLabel("Loading in images..."));
+                Popup popup = pf.getPopup(gui, popupFrame, 300, 300);
+                popup.show();
                 FileInputDialog fileOpener = new FileInputDialog();
                 try {
                     fileHandler.loadImages(fileOpener.getFilesFromUser());
                 } catch (Exception e) {}
+                popup.hide();
+                // re-enable buttons
+                detectFracturesButton.setEnabled(true);
+                loadImagesButton.setEnabled(true); 
             }
         });
         detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                imagePanel.showFractures(); // detects fractures + colours them 
+                detectFracturesButton.setEnabled(false);
+                loadImagesButton.setEnabled(false);
+                // detect fracture voxels, detects fractures + colours them
+                // NOTE: ImagePanel will repaint and show coloured fractures
+                imageStack.detectFractures();
+                imagePanel.repaint(); // refresh imagePanel
+                loadImagesButton.setEnabled(true);
+                detectFracturesButton.setEnabled(true);
             }
         });
+
+
         // ImageSlider Setup
         imageSlider.setMinimum(0);
         imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
@@ -77,9 +102,11 @@ public class GUI extends JFrame{
             System.out.println(sliceSelected);
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
-                this.displayImageSlice(sliceSelected);
+                this.displaySlice(sliceSelected);
             }
         });
+
+
         // Mouse listner - gets fractures on click
 		imagePanel.addMouseListener(new MouseListener(){
 			@Override
@@ -107,6 +134,8 @@ public class GUI extends JFrame{
 			public void mouseExited(MouseEvent e){};
 
 		});
+        
+        
         // Layout - Outter window
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,18 +180,11 @@ public class GUI extends JFrame{
     public void setImageStack(CTImageStack imageStack) {
         if (imageStack != null) {
             this.imageStack=imageStack;
-            this.imagePanel.setImageStack(imageStack);
+            this.imagePanel.setImageStack(imageStack); // pass imageStack to ImagePanel 
             imageSlider.setEnabled(true); // enable slider
             this.imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize()-1); // set slider scale to no. CTImageSlices
-            this.displayImageSlice(0); // display first slice in stack 
+            this.displaySlice(0); // display first slice in stack 
         }
-    }
-
-    /**
-     * Gets image stack this GUI is responsible for
-     */
-    public CTImageStack getImageStack() {
-        return imageStack;
     }
 
 
@@ -173,7 +195,7 @@ public class GUI extends JFrame{
      * Note: ImagePanel will automatically repaint/refresh the panel
      * @param zCoOrd 
      */
-    private void displayImageSlice(int zCoOrd) {
+    private void displaySlice(int zCoOrd) {
         imagePanel.displaySlice(zCoOrd);
     }
 
