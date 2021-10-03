@@ -66,9 +66,10 @@ public class GUI extends JFrame{
                 popupFrame.add(new JLabel("Loading in images..."));
                 Popup popup = pf.getPopup(gui, popupFrame, 300, 300);
                 popup.show();
-                FileInputDialog fileOpener = new FileInputDialog();
+                // this will load in images by reading in image files, creating image slices 
+                // and generating a CTImageStack which is stored locally here in GUI object
                 try {
-                    fileHandler.loadImages(fileOpener.getFilesFromUser());
+                    fileHandler.loadImages();
                 } catch (Exception e) {}
                 popup.hide();
                 // re-enable buttons

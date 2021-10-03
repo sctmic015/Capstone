@@ -27,11 +27,12 @@ public class FileHandler {
 
     /**
      * Loads new set of image files into GUI given an array of files 
-     * @param files Array of PGM image files to load in 
      * @return boolean True if successfull, false otherwise
      * @throws Exception Exception if no gui instance variable is set or its null 
      */
-    public boolean loadImages(ArrayList<File> files) throws Exception{
+    public boolean loadImages() throws Exception{
+        FileInputDialog fileOpener = new FileInputDialog();
+        ArrayList<File> files = fileOpener.getFilesFromUser();
         if (gui == null) {
             throw new Exception("No GUI attached to FileHandler");
         }
