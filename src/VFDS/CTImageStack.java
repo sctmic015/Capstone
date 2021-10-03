@@ -15,12 +15,9 @@ public class CTImageStack {
      * creates and adds ImageSlices
      * @param files ArrayList of files 
      */
-    public CTImageStack(ArrayList<File> files) {
-        imageSlices=new ArrayList<CTImageSlice>();
-        for (int i = 0; i < files.size(); i++) {
-            imageSlices.add( new CTImageSlice(i,files.get(i)) );
-        }
-        numSlices = files.size();
+    public CTImageStack(ArrayList<CTImageSlice> imageSlices) {
+        this.imageSlices = imageSlices;
+        numSlices = imageSlices.size();
     }
 
 
