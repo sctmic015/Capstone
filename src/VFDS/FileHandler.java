@@ -31,13 +31,17 @@ public class FileHandler {
      * @throws Exception Exception if no gui instance variable is set or its null 
      */
     public boolean loadImages() throws Exception{
+        // Request files from user
         FileInputDialog fileOpener = new FileInputDialog();
         ArrayList<File> files = fileOpener.getFilesFromUser();
+
         if (gui == null) {
             throw new Exception("No GUI attached to FileHandler");
         }
         if (files != null) {
-            gui.setImageStack( new CTImageStack(files) );
+            // Given files, create CTImageStack and pass that to the GUI 
+            // NOTE: the createCTImageStack(files) method will do the converting from file -> CTImageSlice 
+            gui.setImageStack( createCTImageStack(files) );
             return true;
         }
         return false;
@@ -104,5 +108,17 @@ public class FileHandler {
             int[][] result = new int[0][0];
             return result;
         }
+    }
+
+    private CTImageStack createCTImageStack(ArrayList<File> files) {
+        // Given files, creates CTImageSlices for each file
+        ArrayList<CTImageSlice> imageSlices = new ArrayList<CTImageSlice>();
+        for (int i = 0; i < files.size(); i++) {
+            imageSlices.add( new CTImageSlice(i,files.get(i)) );
+        }
+
+        // Takes abocve CTImageSlices and creates CTImageStack
+        CTImageStack imageStack = new CTImageStack(imageSlices);
+        return imageStack;
     }
 }
