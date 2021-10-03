@@ -3,8 +3,96 @@ import java.util.ArrayList;
 
 public class Dectection {
 
-    static final int LOWER_BOUND_THRESHOLD = 100;
-    static final int UPPER_BOUND_THRESHOLD = 150;
+    static int LOWER_BOUND_THRESHOLD = 100;
+    static int UPPER_BOUND_THRESHOLD = 150;
+    
+     /**
+     * method finds threshold values for detection of noisy images
+     */
+    public static void findThresholds(ArrayList<CTImageSlice> controlImages){
+        //ArrayList of integers/counters to plot frequency of voxel colour values
+        ArrayList<Integer> arrHistogram = new ArrayList<>(201);
+
+        int tempLower = 0;
+        int tempHigher = 0;
+        for(int i = 0; i < 201; i++){
+            arrHistogram.add(0);
+        }
+
+        //plot the histogram points according to the voxelvalue and its frequency
+        int voxelValue = 0;
+        for(CTImageSlice imageSlice : controlImages){
+            for (int x = 1; x < imageSlice.getXDimension() -1; x ++){
+                for (int y = 1; y < imageSlice.getYDimension() -1; y ++){
+                    voxelValue = imageSlice.getImageData()[x][y];
+                    //error checking
+                    if(voxelValue > 200){
+                        voxelValue = 200;
+                    }
+
+                    int temp = arrHistogram.get(voxelValue);
+                    //update the frequency at the index value
+                    temp++;
+                    arrHistogram.set(voxelValue, temp);
+                }
+            }
+        }
+
+        //this section checks the following/preceding values of the index to determine if it is a bound threshold
+        //counter also serves as index for histogram
+        int counter = 0;
+        for(int i : arrHistogram){
+
+            //continue/break values indicate indexes that are noise
+            if(counter < 20){
+                counter++;
+                continue;
+            }
+            if(counter == 189){
+                break;
+            }
+
+            //checking previous 'x' values behind the index. Change x for different probabiltiy metric/certainty of threshold
+            int tempB = 0;
+            int tempF =0;
+            for(int x = 1; x <=4; x++){
+                if(arrHistogram.get(counter - x) != 0){
+                    tempB ++;
+                }
+
+
+            }
+            for(int x =1; x<=5; x++){
+                if(arrHistogram.get(counter + x) != 0){
+                    tempF ++;
+                }
+            }
+            //we can play arround with "4" for accuracy purposes. i.e 4 of its 5 predecessors/following values have a frequency above 0.
+            //account for gaps
+            if((tempB == 0) && (tempF >= 4)){
+                tempLower = counter;
+
+                counter ++;
+                continue;
+            }else if((tempB > 1) && (tempF <= 1)){
+                if(tempLower!= 0){
+                    tempHigher = counter;
+                    //both thresholds found, therefore break
+                    break;
+                }
+                counter++;
+                continue;
+            } else {
+                counter ++;
+                continue;
+            }
+        }
+
+
+        LOWER_BOUND_THRESHOLD = (int)(tempLower-(tempHigher-tempLower)*0.1);
+        UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
+
+    }
 
     /**
      * Finds the fracture voxels by looking at the voxels colour and its neighbours

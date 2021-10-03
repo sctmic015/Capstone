@@ -1,6 +1,7 @@
 package VFDS;
 import javax.swing.*;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame{
@@ -74,12 +75,22 @@ public class GUI extends JFrame{
                 // re-enable buttons
                 detectFracturesButton.setEnabled(true);
                 loadImagesButton.setEnabled(true); 
+
+                // image analysis --> Determine if noisy; Detect thresholds.
+                ArrayList<CTImageSlice> subList = new ArrayList<CTImageSlice>();
+                    for (int i = ((imageStack.getSize()/2) - 7);
+                        i < ((imageStack.getSize()/2) + 7); i ++){
+                            subList.add(imageStack.getImageSlice(i));
+                    }
+                Dectection.findThresholds(subList);                    
+                
             }
         });
         detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detectFracturesButton.setEnabled(false);
                 loadImagesButton.setEnabled(false);
+                
                 // detect fracture voxels, detects fractures + colours them
                 // NOTE: ImagePanel will repaint and show coloured fractures
                 imageStack.detectFractures();
