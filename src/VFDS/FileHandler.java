@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ForkJoinPool;
 
 /**
  * Handles all file management 
@@ -112,10 +113,10 @@ public class FileHandler {
 
     private CTImageStack createCTImageStack(ArrayList<File> files) {
         // Given files, creates CTImageSlices for each file
-        ArrayList<CTImageSlice> imageSlices = new ArrayList<CTImageSlice>();
-        for (int i = 0; i < files.size(); i++) {
-            imageSlices.add( new CTImageSlice(i,files.get(i)) );
-        }
+        // Does this in parallel using ForkJoin framework
+        ArrayList<CTImageSlice> imageSlices=new ArrayList<CTImageSlice>();
+        ForkJoinReadInFile readInAction = new ForkJoinReadInFile(imageSlices, files, 0);
+        new ForkJoinPool().invoke(readInAction);
 
         // Takes abocve CTImageSlices and creates CTImageStack
         CTImageStack imageStack = new CTImageStack(imageSlices);
