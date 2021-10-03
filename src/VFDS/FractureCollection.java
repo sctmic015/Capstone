@@ -103,7 +103,8 @@ public class FractureCollection {
             return image;
         }
         else{
-            return new BufferedImage(0,0, BufferedImage.TYPE_INT_ARGB); // blank image 
+            // TODO: check this is ok?
+            return new BufferedImage(width,height, BufferedImage.TYPE_INT_ARGB); // blank image 
         }
     }
 
