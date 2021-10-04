@@ -1,7 +1,6 @@
 package VFDS;
 import javax.swing.*;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.awt.event.MouseEvent;
 
 public class GUI extends JFrame{
@@ -13,6 +12,8 @@ public class GUI extends JFrame{
     private javax.swing.JButton loadImagesButton;
     private javax.swing.JSlider imageSlider;
     private ImagePanel imagePanel; // custom JPanel 
+    private XYImageFrame xView;
+    private XYImageFrame yView;
     private CTImageStack imageStack;
     private FileHandler fileHandler;
 
@@ -43,6 +44,8 @@ public class GUI extends JFrame{
     public void setupGUI() {
         // Setup 
         imagePanel = new ImagePanel(imageStack);
+        xView = new XYImageFrame(0, imageStack);
+        yView = new XYImageFrame(1, imageStack);
         detectFracturesButton = new javax.swing.JButton();
         loadImagesButton = new javax.swing.JButton();
         imageSlider = new javax.swing.JSlider();
@@ -55,7 +58,6 @@ public class GUI extends JFrame{
         detectFracturesButton.setText("Detect fractures");
         loadImagesButton.setText("Load images");
         // Buttons - ActionListeners
-        GUI gui = this;
         loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 // disable buttons
@@ -65,7 +67,7 @@ public class GUI extends JFrame{
                 PopupFactory pf = new PopupFactory();
                 JPanel popupFrame = new JPanel();
                 popupFrame.add(new JLabel("Loading in images..."));
-                Popup popup = pf.getPopup(gui, popupFrame, 300, 300);
+                Popup popup = pf.getPopup(imagePanel, popupFrame, 300, 300);
                 popup.show();
                 // this will load in images by reading in image files, creating image slices 
                 // and generating a CTImageStack which is stored locally here in GUI object
@@ -109,6 +111,7 @@ public class GUI extends JFrame{
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
                 this.displaySlice(sliceSelected);
+                // this.xView.refresh(sliceSelected);
             }
         });
 
@@ -190,6 +193,10 @@ public class GUI extends JFrame{
             imageSlider.setEnabled(true); // enable slider
             this.imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize()-1); // set slider scale to no. CTImageSlices
             this.displaySlice(0); // display first slice in stack 
+
+            // Open X-axis view 
+            xView.setImageStack(imageStack);
+            yView.setImageStack(imageStack);
         }
     }
 

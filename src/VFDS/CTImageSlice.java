@@ -127,4 +127,32 @@ public class CTImageSlice {
         fractureVoxels = Dectection.findFractureVoxels(this);
     }
 
+    /**
+     * Gets 1d array of an x-axis side view of the image slice 
+     * @param xCoOrd
+     * @return 1d array of an x-axis side view of the image slice
+     */
+    public int[] getXview(int xCoOrd) {
+        int[] data = new int[xDimension];
+        for (int y = 0; y < data.length; y++) {
+            // TODO: use thresholds
+            data[y] = Math.max(data[y], imageData[xCoOrd][y]); // TODO: fracture colour?
+        }
+        return data;
+    }
+
+    /**
+     * Gets 1d array of an y-axis side view of the image slice 
+     * @param xCoOrd
+     * @return 1d array of an y-axis side view of the image slice
+     */
+    public int[] getYview(int yCoOrd) {
+        int[] data = new int[yDimension];
+        for (int x = 0; x < data.length; x++) {
+            // TODO: use thresholds
+            data[x] = Math.max(data[x], imageData[x][yCoOrd]); // TODO: fracture colour?
+        }
+        return data;
+    }
+
 }

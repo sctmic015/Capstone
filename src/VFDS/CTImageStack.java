@@ -1,6 +1,8 @@
 package VFDS;
 import java.io.File;
 import java.util.ArrayList;
+import java.awt.image.*;
+import java.awt.*;
 
 /**
  * Holds a stack of image slices 
@@ -68,5 +70,29 @@ public class CTImageStack {
      */
     public FractureCollection getFractures() {
         return fractures;
+    }
+
+    public BufferedImage getXviewImage(int xCoOrd) {
+        BufferedImage image = new BufferedImage(imageSlices.get(0).getXDimension(), imageSlices.get(0).getYDimension(), BufferedImage.TYPE_INT_ARGB);
+        for (CTImageSlice imageSlice : imageSlices) {
+            int[] data = imageSlice.getXview(xCoOrd);
+            for (int x = 0; x < data.length; x++) {
+                image.setRGB(x, imageSlice.getZCoOrd(), new Color(data[x],data[x],data[x],255).getRGB());
+            }
+            
+        }
+        return image;
+    }
+
+    public BufferedImage getYviewImage(int yCoOrd) {
+        BufferedImage image = new BufferedImage(imageSlices.get(0).getXDimension(), imageSlices.get(0).getYDimension(), BufferedImage.TYPE_INT_ARGB);
+        for (CTImageSlice imageSlice : imageSlices) {
+            int[] data = imageSlice.getYview(yCoOrd);
+            for (int y = 0; y < data.length; y++) {
+                image.setRGB(imageSlice.getZCoOrd(), y, new Color(data[y],data[y],data[y],255).getRGB());
+            }
+            
+        }
+        return image;
     }
 }
