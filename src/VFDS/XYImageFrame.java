@@ -9,7 +9,7 @@ public class XYImageFrame extends JFrame{
     // Instance variables for frame 
     private JLabel iconViewLabel;
     private JPanel iconViewPanel;
-    private XImagePanel imagePanel;
+    private XYImagePanel imagePanel;
     private JSlider imageSlider;
 
 
@@ -29,7 +29,7 @@ public class XYImageFrame extends JFrame{
 
     private void initComponents() {
         
-        imagePanel = new XImagePanel(xyStyle);
+        imagePanel = new XYImagePanel(xyStyle);
         imageSlider = new JSlider();
         iconViewPanel = new JPanel();
         ImageIcon icon = new ImageIcon(xyStyle==0 ?
