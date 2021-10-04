@@ -3,7 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 
-public class XImagePanel extends JPanel{
+public class XYImagePanel extends JPanel{
     private static final int PANEL_SIZE = 384;
     // Instance variables 
     private CTImageStack imageStack;
@@ -14,7 +14,7 @@ public class XImagePanel extends JPanel{
     /**
      * Basic constructor that intializes empty image panel
      */
-    public XImagePanel(int xyStyle) {
+    public XYImagePanel(int xyStyle) {
         this.xyStyle = xyStyle==0 ? 0 : 1;
         setupPanelBasics();
     }
@@ -24,7 +24,7 @@ public class XImagePanel extends JPanel{
      * This image stack is stored and rendered (through swing)
      * @param imageStack 
      */
-    public XImagePanel(int xyStyle, CTImageStack imageStack) {
+    public XYImagePanel(int xyStyle, CTImageStack imageStack) {
         this.xyStyle = xyStyle==0 ? 0 : 1;
         setupPanelBasics();
         this.setImageStack(imageStack);
@@ -39,11 +39,11 @@ public class XImagePanel extends JPanel{
         this.setLayout(imagePanelLayout);
         imagePanelLayout.setHorizontalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, XImagePanel.PANEL_SIZE, Short.MAX_VALUE)
+            .addGap(0, XYImagePanel.PANEL_SIZE, Short.MAX_VALUE)
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, XImagePanel.PANEL_SIZE, Short.MAX_VALUE)
+            .addGap(0, XYImagePanel.PANEL_SIZE, Short.MAX_VALUE)
         );
     }
     
@@ -58,9 +58,9 @@ public class XImagePanel extends JPanel{
             if (imageStack.getXviewImage(xCoOrd) != null){
                 Image img;
                 if (xyStyle==0) {
-                    img = imageStack.getXviewImage(xCoOrd).getScaledInstance(XImagePanel.PANEL_SIZE, XImagePanel.PANEL_SIZE, 0);
+                    img = imageStack.getXviewImage(xCoOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
                 }else{
-                    img = imageStack.getYviewImage(xCoOrd).getScaledInstance(XImagePanel.PANEL_SIZE, XImagePanel.PANEL_SIZE, 0);
+                    img = imageStack.getYviewImage(xCoOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
                 }
                 g.drawImage(img, 0, 0, null);
             }
@@ -68,7 +68,7 @@ public class XImagePanel extends JPanel{
             if (imageStack.getFractures() != null) {
                 // TODO: fractures 
                 // overlayImage = imageStack.getFractures().getImage(currentImageSlice.getZCoOrd(), currentImageSlice.getImage().getWidth(), currentImageSlice.getImage().getHeight());
-                // g.drawImage(overlayImage.getScaledInstance(XImagePanel.PANEL_SIZE, XImagePanel.PANEL_SIZE, 0), 0, 0, null);
+                // g.drawImage(overlayImage.getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0), 0, 0, null);
             }
         }
 	}
@@ -83,7 +83,7 @@ public class XImagePanel extends JPanel{
     }
 
     /**
-     * Sets the imageStack which this XImagePanel will represent 
+     * Sets the imageStack which this XYImagePanel will represent 
      * @param imageStack
      */
     public void setImageStack(CTImageStack imageStack) {
