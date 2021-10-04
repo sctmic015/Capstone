@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="junit4">
+    <CLASSES>
+      <root url="jar://$APPLICATION_HOME_DIR$/lib/junit4.jar!/" />
+      <root url="jar://$APPLICATION_HOME_DIR$/lib/javaml-0.1.7/javaml-0.1.7.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
