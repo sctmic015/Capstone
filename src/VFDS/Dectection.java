@@ -1,7 +1,4 @@
 package VFDS;
-import net.sf.javaml.clustering.Clusterer;
-import net.sf.javaml.clustering.KMeans;
-import net.sf.javaml.core.Dataset;
 
 import java.util.ArrayList;
 
