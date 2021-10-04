@@ -8,9 +8,17 @@ public class Dectection {
     static int UPPER_BOUND_THRESHOLD = 200;
     
      /**
-     * method finds threshold values for detection of noisy images
-     */
-     public static void findThresholds(ArrayList<CTImageSlice> controlImages){
+      * Finds threshold values for detection of noisy images
+      * @param imageStack imageStack to get thresholds for
+      */
+     public static void findThresholds(CTImageStack imageStack){
+        // image analysis --> Determine if noisy; Detect thresholds.
+        ArrayList<CTImageSlice> controlImages = new ArrayList<CTImageSlice>();
+        for (int i = ((imageStack.getSize()/2) - 20);
+            i < ((imageStack.getSize()/2) + 20); i ++){
+                controlImages.add(imageStack.getImageSlice(i));
+        }
+
          //ArrayList of integers/counters to plot frequency of voxel colour values
          ArrayList<Integer> arrHistogram = new ArrayList<>(201);
 
