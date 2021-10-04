@@ -7,7 +7,7 @@ public class XYImagePanel extends JPanel{
     private static final int PANEL_SIZE = 384;
     // Instance variables 
     private CTImageStack imageStack;
-    private int xCoOrd;
+    private int coOrd;
     private BufferedImage overlayImage;
     private int xyStyle; // 0=x-axis 1=y-axis
 
@@ -55,12 +55,12 @@ public class XYImagePanel extends JPanel{
 		super.paintComponent(g);
         if (imageStack != null) {
             // draw the image slice in greyscale as an image
-            if (imageStack.getXviewImage(xCoOrd) != null){
+            if (imageStack.getXviewImage(coOrd) != null){
                 Image img;
                 if (xyStyle==0) {
-                    img = imageStack.getXviewImage(xCoOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
+                    img = imageStack.getXviewImage(coOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
                 }else{
-                    img = imageStack.getYviewImage(xCoOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
+                    img = imageStack.getYviewImage(coOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
                 }
                 g.drawImage(img, 0, 0, null);
             }
@@ -95,9 +95,9 @@ public class XYImagePanel extends JPanel{
      * Displays CTImageSlice in CTImageStack given the zCoOrd / layer number 
      * @param zCoOrd zCoOrd of CTImageSlice 
      */
-    public void displaySlice(int xCoOrd) {
+    public void displaySlice(int coOrd) {
         this.clearOverlay();
-        this.xCoOrd = xCoOrd;
+        this.coOrd = coOrd;
         repaint();
     }
     
