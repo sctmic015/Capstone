@@ -82,6 +82,15 @@ public class FractureCollection {
         return fractures;
     }
 
+    public boolean compareArrayFractures(FractureVoxel fractureNeigbour, ArrayList<FractureVoxel> fractureVoxelArray){
+        for (int i = 0; i < fractureVoxelArray.size(); i ++){
+            if (fractureVoxelArray.get(i).isNeighbourVoxel(fractureNeigbour)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Gets an image representation of the fractures for a given Z plane
      * @param zPlane The z-plane to get image rep. for 

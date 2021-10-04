@@ -1,4 +1,7 @@
 package VFDS;
+
+import java.util.ArrayList;
+
 /**
  * FractureVoxel
  */

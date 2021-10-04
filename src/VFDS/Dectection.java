@@ -1,98 +1,78 @@
 package VFDS;
+import net.sf.javaml.clustering.Clusterer;
+import net.sf.javaml.clustering.KMeans;
+import net.sf.javaml.core.Dataset;
+
 import java.util.ArrayList;
 
 public class Dectection {
 
-    static int LOWER_BOUND_THRESHOLD = 100;
-    static int UPPER_BOUND_THRESHOLD = 150;
+    static int LOWER_BOUND_THRESHOLD = 200;
+    static int UPPER_BOUND_THRESHOLD = 200;
     
      /**
      * method finds threshold values for detection of noisy images
      */
-    public static void findThresholds(ArrayList<CTImageSlice> controlImages){
-        //ArrayList of integers/counters to plot frequency of voxel colour values
-        ArrayList<Integer> arrHistogram = new ArrayList<>(201);
+     public static void findThresholds(ArrayList<CTImageSlice> controlImages){
+         //ArrayList of integers/counters to plot frequency of voxel colour values
+         ArrayList<Integer> arrHistogram = new ArrayList<>(201);
 
-        int tempLower = 0;
-        int tempHigher = 0;
-        for(int i = 0; i < 201; i++){
-            arrHistogram.add(0);
-        }
+         int tempLower = 0;
+         int tempHigher = 0;
+         for(int i = 0; i < 201; i++){
+             arrHistogram.add(0);
+         }
 
-        //plot the histogram points according to the voxelvalue and its frequency
-        int voxelValue = 0;
-        for(CTImageSlice imageSlice : controlImages){
-            for (int x = 1; x < imageSlice.getXDimension() -1; x ++){
-                for (int y = 1; y < imageSlice.getYDimension() -1; y ++){
-                    voxelValue = imageSlice.getImageData()[x][y];
-                    //error checking
-                    if(voxelValue > 200){
-                        voxelValue = 200;
-                    }
+         //plot the histogram points according to the voxelvalue and its frequency
+         int voxelValue = 0;
+         for(CTImageSlice imageSlice : controlImages){
+             for (int x = 1; x < imageSlice.getXDimension() -1; x ++){
+                 for (int y = 1; y < imageSlice.getYDimension() -1; y ++){
+                     voxelValue = imageSlice.getImageData()[x][y];
+                     //error checking
+                     if(voxelValue > 200){
+                         voxelValue = 200;
+                     }
 
-                    int temp = arrHistogram.get(voxelValue);
-                    //update the frequency at the index value
-                    temp++;
-                    arrHistogram.set(voxelValue, temp);
-                }
-            }
-        }
+                     int temp = arrHistogram.get(voxelValue);
+                     //update the frequency at the index value
+                     temp++;
+                     arrHistogram.set(voxelValue, temp);
+                 }
+             }
+         }
 
-        //this section checks the following/preceding values of the index to determine if it is a bound threshold
-        //counter also serves as index for histogram
-        int counter = 0;
-        for(int i : arrHistogram){
-
-            //continue/break values indicate indexes that are noise
-            if(counter < 20){
-                counter++;
-                continue;
-            }
-            if(counter == 189){
-                break;
-            }
-
-            //checking previous 'x' values behind the index. Change x for different probabiltiy metric/certainty of threshold
-            int tempB = 0;
-            int tempF =0;
-            for(int x = 1; x <=4; x++){
-                if(arrHistogram.get(counter - x) != 0){
-                    tempB ++;
-                }
+         //this section checks the following/preceding values of the index to determine if it is a bound threshold
+         //counter also serves as index for histogram
 
 
-            }
-            for(int x =1; x<=5; x++){
-                if(arrHistogram.get(counter + x) != 0){
-                    tempF ++;
-                }
-            }
-            //we can play arround with "4" for accuracy purposes. i.e 4 of its 5 predecessors/following values have a frequency above 0.
-            //account for gaps
-            if((tempB == 0) && (tempF >= 4)){
-                tempLower = counter;
+         //find upper bound
+         for(int i = arrHistogram.size() -10; i >= 0; i--){
+             int x_val = arrHistogram.get(i);
+             if(x_val > 0 && arrHistogram.get(i+1) == 0){
+                 tempHigher = i ;
+                 break;
+             }
+         }
 
-                counter ++;
-                continue;
-            }else if((tempB > 1) && (tempF <= 1)){
-                if(tempLower!= 0){
-                    tempHigher = counter;
-                    //both thresholds found, therefore break
-                    break;
-                }
-                counter++;
-                continue;
-            } else {
-                counter ++;
-                continue;
-            }
-        }
+         for(int i = tempHigher -1; i >= 0; i --){
+             int tempB = 0;
+             for(int x = 1; x <=5; x++){
+                 if(arrHistogram.get(i - x) != 0){
+                     tempB ++;
+                 }
+             }
+             if(tempB == 0){
+                 tempLower = i;
+                 break;
+             }
+         }
 
 
-        LOWER_BOUND_THRESHOLD = (int)(tempLower-(tempHigher-tempLower)*0.1);
-        UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
+         LOWER_BOUND_THRESHOLD = tempLower;
+         UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
 
-    }
+     }
 
     /**
      * Finds the fracture voxels by looking at the voxels colour and its neighbours

@@ -79,8 +79,8 @@ public class GUI extends JFrame{
 
                 // image analysis --> Determine if noisy; Detect thresholds.
                 ArrayList<CTImageSlice> subList = new ArrayList<CTImageSlice>();
-                    for (int i = ((imageStack.getSize()/2) - 7);
-                        i < ((imageStack.getSize()/2) + 7); i ++){
+                    for (int i = ((imageStack.getSize()/2) - 20);
+                        i < ((imageStack.getSize()/2) + 20); i ++){
                             subList.add(imageStack.getImageSlice(i));
                     }
                 Dectection.findThresholds(subList);                    
