@@ -77,13 +77,7 @@ public class GUI extends JFrame{
                 detectFracturesButton.setEnabled(true);
                 loadImagesButton.setEnabled(true); 
 
-                // image analysis --> Determine if noisy; Detect thresholds.
-                ArrayList<CTImageSlice> subList = new ArrayList<CTImageSlice>();
-                    for (int i = ((imageStack.getSize()/2) - 7);
-                        i < ((imageStack.getSize()/2) + 7); i ++){
-                            subList.add(imageStack.getImageSlice(i));
-                    }
-                Dectection.findThresholds(subList);                    
+                Dectection.findThresholds(imageStack);  // get threshold for images                   
                 
             }
         });
