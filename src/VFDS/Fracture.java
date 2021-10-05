@@ -77,5 +77,19 @@ public class Fracture {
     public void setColor(Color color){
         this.color = color;
     }
+    /**
+     * Checks if voxel is neighbours with any of the voxels already grouped into the fracture
+     * @param FractureVoxel fracture voxel being checked 
+     */
+    public boolean isPartOfFracture(FractureVoxel i){
+        
+        for (FractureVoxel f : fractureVoxels){
+            if(f.isNeighbourVoxel(i) == true){
+                return true;
+            }
+        }
+
+        return false;        
+    }
     
 }
