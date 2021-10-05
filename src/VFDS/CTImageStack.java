@@ -57,14 +57,14 @@ public class CTImageStack {
 
             //apply concurrency at this point
             ForkJoinPool forkJoinPool = new ForkJoinPool();
-            allFractureVoxels.addAll(forkJoinPool.invoke(new DetectConcurrently(imageSlices, 0, imageSlices.size()) ));
+            allFractureVoxels.addAll(forkJoinPool.invoke(new DetectConcurrently(imageSlices, 0, imageSlices.size())));
 
             // for (CTImageSlice imageSlice : imageSlices) {
-            //     allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
+            //     allFractureVoxels.addAll( imageSlice.getFractureVoxels());
             // }
 
             fractures = new FractureCollection(allFractureVoxels);
-            
+
         }
     }
 

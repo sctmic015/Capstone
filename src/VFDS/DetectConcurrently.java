@@ -24,7 +24,7 @@ public class DetectConcurrently extends RecursiveTask<ArrayList<FractureVoxel>> 
                 }
                 return arrFV;
             } else {
-                int mid = low + (high -low)/2;
+                int mid = low + (high-low)/2;
                 DetectConcurrently left = new DetectConcurrently(arrCT, low, mid);
                 DetectConcurrently right = new DetectConcurrently(arrCT, mid, high);
                 left.fork();
