@@ -20,7 +20,8 @@ public class FractureCollection {
     public void group(ArrayList<FractureVoxel> arrFV){
         //iterate through list of idenitfied fracure voxels 
         outer: //outer label to continue to outer portion of nested loops
-        for (FractureVoxel i : arrFV){
+        while (arrFV.size() > 0){
+            FractureVoxel i = arrFV.get(0);
             //check if there are any fracture objects, if not, create one.
             if(arrFractures.size() == 0){
                 Fracture temp = new Fracture();
@@ -45,7 +46,7 @@ public class FractureCollection {
                     //remove voxel from voxel list
                     arrFV.remove(i);
                     // skip to outer label, starting next iteration of outer loop
-                    continue outer;
+                    continue;
 
                     // voxel belongs to multiple fractures, therefore they need to be combined
                 } else if(temp.size() > 1){
@@ -62,15 +63,20 @@ public class FractureCollection {
                     for(Fracture fracture : temp){
                         arrFractures.remove(fracture);
                     }
-                    continue outer;    
-                }    
+                    continue;
+                }
+                else if (temp.size() == 0){
+                    //if the voxel doesnt belong to any fracture object, a new one is made
+                    Fracture tempf = new Fracture();
+                    tempf.addVoxel(i);
+                    arrFV.remove(i);
+                    arrFractures.add(tempf);
+                    continue outer;
+                }
+
             }
 
-            //if the voxel doesnt belong to any fracture object, a new one is made
-            Fracture temp = new Fracture();
-            temp.addVoxel(i);
-            arrFV.remove(i);
-            arrFractures.add(temp);
+
 
         }
     }        

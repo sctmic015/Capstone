@@ -11,6 +11,8 @@ public class GUI extends JFrame{
     // Instance variables
     private javax.swing.JButton detectFracturesButton;
     private javax.swing.JButton loadImagesButton;
+    private javax.swing.JButton saveFracturesButton;
+    private javax.swing.JButton loadFracturesButton;
     private javax.swing.JSlider imageSlider;
     private ImagePanel imagePanel; // custom JPanel 
     private CTImageStack imageStack;
@@ -45,6 +47,8 @@ public class GUI extends JFrame{
         imagePanel = new ImagePanel(imageStack);
         detectFracturesButton = new javax.swing.JButton();
         loadImagesButton = new javax.swing.JButton();
+        saveFracturesButton = new javax.swing.JButton();
+        loadFracturesButton = new javax.swing.JButton();
         imageSlider = new javax.swing.JSlider();
         // Window behaviour
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -54,6 +58,8 @@ public class GUI extends JFrame{
         // Buttons
         detectFracturesButton.setText("Detect fractures");
         loadImagesButton.setText("Load images");
+        saveFracturesButton.setText("Save Fractures");
+        loadFracturesButton.setText("Load Fractures");
         // Buttons - ActionListeners
         GUI gui = this;
         loadImagesButton.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +158,7 @@ public class GUI extends JFrame{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
