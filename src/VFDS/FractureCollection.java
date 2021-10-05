@@ -19,7 +19,7 @@ public class FractureCollection {
     
     public void group(ArrayList<FractureVoxel> arrFV){
         //iterate through list of idenitfied fracure voxels 
-        outer: //outer label to continue to outer portion of nested loops
+        //outer: //outer label to continue to outer portion of nested loops
         while (arrFV.size() > 0){
             FractureVoxel i = arrFV.get(0);
             //check if there are any fracture objects, if not, create one.
@@ -33,19 +33,25 @@ public class FractureCollection {
             }
 
             // iterate thorugh fracture objects, checking if voxel belongs to any fracture
+            ArrayList<Fracture> temp = new ArrayList<Fracture>();
             for(Fracture x : arrFractures){
-                ArrayList<Fracture> temp = new ArrayList<Fracture>();
                 if(x.isPartOfFracture(i) == true){
                     temp.add(x);
                 }
+            }
 
+            for(Fracture f : temp){
+                arrFractures.remove(f);
+            }
                 //voxel only belongs to 1 existing fracture. It gets added, and program iterates to next voxel
                 if(temp.size() == 1){
                     //add voxel to fracture
-                    x.addVoxel(i);
+                    temp.get(0).addVoxel(i);
                     //remove voxel from voxel list
                     arrFV.remove(i);
                     // skip to outer label, starting next iteration of outer loop
+                    arrFractures.add(temp.get(0));
+                    
                     continue;
 
                     // voxel belongs to multiple fractures, therefore they need to be combined
@@ -59,27 +65,20 @@ public class FractureCollection {
                     //add combined fracture to Collection list
                     arrFractures.add(combinedFracture);
 
-                    //remove old fractures that needed to be combined
-                    for(Fracture fracture : temp){
-                        arrFractures.remove(fracture);
-                    }
                     continue;
-                }
-                else if (temp.size() == 0){
+
+                } else if (temp.size() == 0){
                     //if the voxel doesnt belong to any fracture object, a new one is made
                     Fracture tempf = new Fracture();
                     tempf.addVoxel(i);
                     arrFV.remove(i);
                     arrFractures.add(tempf);
-                    continue outer;
+                    continue;
                 }
 
             }
-
-
-
-        }
-    }        
+     }
+            
     
 
     // /**
