@@ -52,7 +52,7 @@ public class FractureVoxel {
         // TODO: add z plane
         if (neighbourVoxel.getX() - this.getX() >= -1 && neighbourVoxel.getX() - this.getX() <= 1 && 
             neighbourVoxel.getY() - this.getY() >= -1 && neighbourVoxel.getY() - this.getY() <= 1 &&
-            neighbourVoxel.getZ() - this.getZ() >= 1 && neighbourVoxel.getZ() - this.getZ() <= 1) {
+            neighbourVoxel.getZ() - this.getZ() >= -1 && neighbourVoxel.getZ() - this.getZ() <= 1) {
                 if (neighbourVoxel.getX() == this.getX() && neighbourVoxel.getY() == this.getY() && neighbourVoxel.getZ() == this.getZ()) {
                     // same voxel not neighbour
                     return false;
