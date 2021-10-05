@@ -1,6 +1,7 @@
 package VFDS;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ForkJoinPool;
 
 /**
  * Holds a stack of image slices 
@@ -47,15 +48,23 @@ public class CTImageStack {
     /**
      * Runs detection on all CTImageSlices in parallel 
      * to find fracture voxels and join them into fractures 
+     * @param Runtime 
      */
     public void detectFractures() {
         // TODO: do in parallel 
         if (fractures == null) {
             ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
-            for (CTImageSlice imageSlice : imageSlices) {
-                allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
-            }
+
+            //apply concurrency at this point
+            ForkJoinPool forkJoinPool = new ForkJoinPool();
+            allFractureVoxels.addAll(forkJoinPool.invoke(new DetectConcurrently(imageSlices, 0, imageSlices.size()) ));
+
+            // for (CTImageSlice imageSlice : imageSlices) {
+            //     allFractureVoxels.addAll( imageSlice.getFractureVoxels() );
+            // }
+
             fractures = new FractureCollection(allFractureVoxels);
+            
         }
     }
 

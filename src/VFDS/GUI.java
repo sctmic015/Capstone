@@ -94,6 +94,7 @@ public class GUI extends JFrame{
                 
                 // detect fracture voxels, detects fractures + colours them
                 // NOTE: ImagePanel will repaint and show coloured fractures
+                
                 imageStack.detectFractures();
                 imagePanel.repaint(); // refresh imagePanel
                 loadImagesButton.setEnabled(true);
