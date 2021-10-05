@@ -3,8 +3,8 @@ import java.util.ArrayList;
 
 public class Dectection {
 
-    static int LOWER_BOUND_THRESHOLD = 100;
-    static int UPPER_BOUND_THRESHOLD = 150;
+    static final int LOWER_BOUND_THRESHOLD = 100;
+    static final int UPPER_BOUND_THRESHOLD = 150;
     
      /**
      * method finds threshold values for detection of noisy images
@@ -89,8 +89,8 @@ public class Dectection {
         }
 
 
-        LOWER_BOUND_THRESHOLD = (int)(tempLower-(tempHigher-tempLower)*0.1);
-        UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
+        // LOWER_BOUND_THRESHOLD = (int)(tempLower-(tempHigher-tempLower)*0.1);
+        // UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
 
     }
 
