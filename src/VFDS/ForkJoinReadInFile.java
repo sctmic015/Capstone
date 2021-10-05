@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 public class ForkJoinReadInFile extends RecursiveAction{
-    private static int threshold = 10; // threshold for recursion (num. of images to work on per a thread)
+    private static int threshold = 1; // threshold for recursion (num. of images to work on per a thread)
 
     private ArrayList<File> files;
     private ArrayList<CTImageSlice> imageSlices;
@@ -52,10 +52,10 @@ public class ForkJoinReadInFile extends RecursiveAction{
                 System.out.println();
             }
             invokeAll(
-                new ForkJoinReadInFile(imageSlices, files1, 0),
-                new ForkJoinReadInFile(imageSlices, files2, 0)
-                // new ForkJoinReadInFile(imageSlices, files1, pos),
-                // new ForkJoinReadInFile(imageSlices, files2, pos+split)
+                // new ForkJoinReadInFile(imageSlices, files1, 0),
+                // new ForkJoinReadInFile(imageSlices, files2, 0)
+                new ForkJoinReadInFile(imageSlices, files1, pos),
+                new ForkJoinReadInFile(imageSlices, files2, pos+split)
             );
             
         }

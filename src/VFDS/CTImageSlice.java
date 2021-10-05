@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A class representing a CT image slice object
  * @author SCTMIC015, SMTJUL022, BLRDAV002
  */
-public class CTImageSlice {
+public class CTImageSlice implements Comparable{
 
     private int zCoOrd;
     private int xDimension;
@@ -151,6 +151,13 @@ public class CTImageSlice {
             data[x] = imageData[x][yCoOrd]; // TODO: fracture colour?
         }
         return data;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        // TODO: class check
+        CTImageSlice other = (CTImageSlice) o;
+        return this.zCoOrd-other.getZCoOrd();
     }
 
 }
