@@ -72,8 +72,11 @@ public class GUI extends JFrame{
                 // this will load in images by reading in image files, creating image slices 
                 // and generating a CTImageStack which is stored locally here in GUI object
                 try {
-                    fileHandler.loadImages();
-                } catch (Exception e) {}
+                fileHandler.loadImages();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.out.println("Make srue to pass GUI to FileHandler");
+                }
                 popup.hide();
                 // re-enable buttons
                 detectFracturesButton.setEnabled(true);

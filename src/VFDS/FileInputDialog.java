@@ -37,9 +37,9 @@ public class FileInputDialog extends JFrame{
             Collections.sort(files, new Comparator<File>(){
                 @Override
                 public int compare(File o1, File o2) {
-                    int n1 = Integer.parseInt(o1.getName().split("[a-zA-Z]+")[1].replace(".", ""));
-                    int n2 = Integer.parseInt(o2.getName().split("[a-zA-Z]+")[1].replace(".", ""));
-                    return n1 - n2;
+                    String s1 = o1.getName();
+                    String s2 = o2.getName();
+                    return new AlphanumComparator().compare(s1, s2);
                 }
             });
             return files;
