@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.image.*;
 
 public class ImagePanel extends JPanel{
-    private static final int PANEL_SIZE = 600;
+
+    private static final int PANEL_SIZEX = GUI.dim.width/2;
+    private static final int PANEL_SIZEY = GUI.dim.height/2;
     // Instance variables 
     private CTImageStack imageStack;
     private CTImageSlice currentImageSlice;
@@ -36,11 +38,11 @@ public class ImagePanel extends JPanel{
         this.setLayout(imagePanelLayout);
         imagePanelLayout.setHorizontalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, ImagePanel.PANEL_SIZE, Short.MAX_VALUE)
+            .addGap(0, ImagePanel.PANEL_SIZEX, Short.MAX_VALUE)
         );
         imagePanelLayout.setVerticalGroup(
             imagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, ImagePanel.PANEL_SIZE, Short.MAX_VALUE)
+            .addGap(0, ImagePanel.PANEL_SIZEY, Short.MAX_VALUE)
         );
     }
     
@@ -53,13 +55,13 @@ public class ImagePanel extends JPanel{
         if (currentImageSlice != null) {
             // draw the image slice in greyscale as an image
             if (currentImageSlice.getImage() != null){
-                Image img = currentImageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0);
+                Image img = currentImageSlice.getImage().getScaledInstance(ImagePanel.PANEL_SIZEX, ImagePanel.PANEL_SIZEY, 0);
                 g.drawImage(img, 0, 0, null);
             }
             // draw the overlay image to show fracture colours 
             if (imageStack.getFractures() != null) {
                 overlayImage = imageStack.getFractures().getImage(currentImageSlice.getZCoOrd(), currentImageSlice.getImage().getWidth(), currentImageSlice.getImage().getHeight());
-                g.drawImage(overlayImage.getScaledInstance(ImagePanel.PANEL_SIZE, ImagePanel.PANEL_SIZE, 0), 0, 0, null);
+                g.drawImage(overlayImage.getScaledInstance(ImagePanel.PANEL_SIZEX, ImagePanel.PANEL_SIZEY, 0), 0, 0, null);
             }
         }
 	}
@@ -112,7 +114,7 @@ public class ImagePanel extends JPanel{
      * @return width of image panel 
      */
     public int getPanelSize() {
-        return PANEL_SIZE;
+        return PANEL_SIZEX;
     }
 
 }

@@ -9,8 +9,10 @@ import javax.imageio.ImageIO;
 
 public class GUI extends JFrame{
     // Dimensions of GUI window
-    static int frameX = 900;
-	static int frameY = 900;
+    static Toolkit toolkit =  Toolkit.getDefaultToolkit ();
+    static Dimension dim = toolkit.getScreenSize();
+    static int frameX = dim.width;
+	static int frameY = dim.height;
     // Instance variables
     private javax.swing.JButton detectFracturesButton;
     private javax.swing.JButton loadImagesButton;
