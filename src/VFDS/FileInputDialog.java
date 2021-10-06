@@ -1,5 +1,6 @@
 package VFDS;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
@@ -23,8 +24,11 @@ public class FileInputDialog extends JFrame{
         this.setVisible(true);
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true); // allow selection of multiple files
-        fileChooser.setFileFilter(new PGMFilenameFilter()); // only accept .pgm 
-        fileChooser.setAcceptAllFileFilterUsed(true); // remove all files option
+        //fileChooser.setFileFilter(new PGMFilenameFilter()); // only accept .pgm
+        //fileChooser.setAcceptAllFileFilterUsed(true); // remove all files option
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("PGM Files","pgm");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
         // Adjust size of file chooser popup
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         fileChooser.setPreferredSize(new Dimension((int)(dim.width*.6),(int)(dim.height*.8)));

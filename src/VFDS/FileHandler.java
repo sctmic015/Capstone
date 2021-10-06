@@ -1,8 +1,14 @@
 package VFDS;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ForkJoinPool;
 
@@ -15,6 +21,8 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class FileHandler {
     private GUI gui;
+    private File selectedFile;
+    private File fileToSave;
 
 
     public FileHandler() {
@@ -32,7 +40,7 @@ public class FileHandler {
      * @throws Exception Exception if no gui instance variable is set or its null 
      */
     public boolean loadImages() throws Exception{
-        // Request files from user
+        // Request files rom user
         FileInputDialog fileOpener = new FileInputDialog();
         ArrayList<File> files = fileOpener.getFilesFromUser();
 
@@ -46,6 +54,7 @@ public class FileHandler {
             return true;
         }
         return false;
+
     }
 
     /**
@@ -117,18 +126,38 @@ public class FileHandler {
     }
 
     public File loadSavedFractures() throws Exception{
-        FileInputDialog fileOpener = new FileInputDialog();
-        ArrayList<File> files = fileOpener.getFilesFromUser();
+        JFileChooser fileChooser = new JFileChooser();
+        //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home.Documents")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File","txt");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Load Fracture File");
 
-        if (gui == null) {
-            throw new Exception("No GUI attached to FileHandler");
-        }
-        if (files != null) {
-            // Given files, create CTImageStack and pass that to the GUI
-            // NOTE: the createCTImageStack(files) method will do the converting from file -> CTImageSlice
-            return files.get(0);
-        }
-        return files.get(0);
+        int result = fileChooser.showOpenDialog(this.gui);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fileChooser.getSelectedFile();
+            System.out.println("Selected file: " + selectedFile.getAbsolutePath());
+        }else
+            throw new FileNotFoundException("No File Selected");
+        return selectedFile;
     }
+    public File saveFractures() throws FileNotFoundException {
+        // parent component of the dialog
+        JFrame parentFrame = new JFrame();
 
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File","txt");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
+        fileChooser.setDialogTitle("Specify a file to save");
+
+        int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            this.fileToSave = fileChooser.getSelectedFile();
+            System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+        }else
+            throw new FileNotFoundException("No File Selected");
+        return fileToSave;
+    }
 }

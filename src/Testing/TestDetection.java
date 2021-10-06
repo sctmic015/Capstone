@@ -14,6 +14,8 @@ import java.util.Scanner;
 
 public class TestDetection {
 
+    @Test
+
     public static void main(String[] args){
         boolean noisy = true;
         // Obtain all necessary file info and all that jazz
