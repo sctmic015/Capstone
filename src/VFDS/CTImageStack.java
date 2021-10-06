@@ -137,11 +137,11 @@ public class CTImageStack {
             }else{
                 int[] data = imageSlice.getYview(yCoOrd);
                 for (int y = 0; y < data.length; y++) {
-                    image.setRGB(imageSlice.getZCoOrd(), y, new Color(data[y],data[y],data[y],255).getRGB());
+                    image.setRGB(y, imageSlice.getZCoOrd(), new Color(data[y],data[y],data[y],255).getRGB());
                     // TODO: remove
-                    if (imageSlice.getZCoOrd() == 77) {
-                        image.setRGB(imageSlice.getZCoOrd(), y, new Color(200,100,23,255).getRGB());
-                    }
+                    // if (imageSlice.getZCoOrd() == 77) {
+                    //     image.setRGB(imageSlice.getZCoOrd(), y, new Color(200,100,23,255).getRGB());
+                    // }
                 }
             }
             
