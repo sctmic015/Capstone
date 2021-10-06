@@ -5,8 +5,8 @@ import java.awt.image.*;
 
 public class ImagePanel extends JPanel{
 
-    private static final int PANEL_SIZEX = GUI.dim.width/2;
-    private static final int PANEL_SIZEY = GUI.dim.height/2;
+    private static final int PANEL_SIZEX = (int)(GUI.dim.height/1.5);
+    private static final int PANEL_SIZEY = (int)(GUI.dim.height/1.5);
     // Instance variables 
     private CTImageStack imageStack;
     private CTImageSlice currentImageSlice;
