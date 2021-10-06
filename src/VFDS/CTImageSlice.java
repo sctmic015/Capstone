@@ -125,7 +125,7 @@ public class CTImageSlice implements Comparable{
      * NOTE: Fracture detection is not done in this class  
      */
     private void detectFractureVoxels() {
-        fractureVoxels = Dectection.findFractureVoxels(this);
+        fractureVoxels = Detection.findFractureVoxels(this);
     }
 
     /**
