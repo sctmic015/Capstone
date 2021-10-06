@@ -111,6 +111,8 @@ public class GUI extends JFrame{
                 // NOTE: ImagePanel will repaint and show coloured fractures
                 imageStack.detectFractures();
                 imagePanel.repaint(); // refresh imagePanel
+                xView.refresh();
+                yView.refresh();
                 loadImagesButton.setEnabled(true);
                 detectFracturesButton.setEnabled(true);
             }
@@ -172,7 +174,6 @@ public class GUI extends JFrame{
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
                 this.displaySlice(sliceSelected);
-                // this.xView.refresh(sliceSelected);
             }
         });
 
