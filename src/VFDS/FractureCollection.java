@@ -111,7 +111,7 @@ public class FractureCollection {
             return image;
         }
         else{
-            // TODO: check this is ok?
+    
             return new BufferedImage(width,height, BufferedImage.TYPE_INT_ARGB); // blank image 
         }
     }

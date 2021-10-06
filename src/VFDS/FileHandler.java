@@ -1,14 +1,11 @@
 package VFDS;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ForkJoinPool;
 
@@ -114,7 +111,7 @@ public class FileHandler {
             System.out.println("Read in PGM file: "+fileName);
             return imageData;
         } catch (Exception e) {
-            // TODO: resolve the issue of if this actually corrupts
+           
             e.printStackTrace();
             int[][] result = new int[0][0];
             return result;
@@ -170,9 +167,9 @@ public class FileHandler {
     public File saveFractures() throws FileNotFoundException {
         // parent component of the dialog
         JFrame parentFrame = new JFrame();
-
+        File returnFile;
         JFileChooser fileChooser = new JFileChooser();
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File","txt");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file","txt");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
         fileChooser.setDialogTitle("Specify a file to save");
@@ -181,10 +178,16 @@ public class FileHandler {
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             this.fileToSave = fileChooser.getSelectedFile();
+            String filename = fileToSave.toString();
+            if(!filename.endsWith(".txt")){
+                filename += ".txt";
+            }
+            returnFile = new File(filename);
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+
         }else{
             throw new FileNotFoundException("No File Selected");
         }
-        return fileToSave;
+        return returnFile;
     }
 }

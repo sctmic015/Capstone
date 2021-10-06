@@ -5,10 +5,11 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.awt.image.*;
 import java.awt.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * Holds a stack of image slices 
+ * Class holds a stack of image slices and is used to iterate thorugh the stack,
+ *  calling each ones' respective detection methods
+ *  @author SCTMIC015, SMTJUL022, BLRDAV002
  */
 public class CTImageStack {
     private ArrayList<CTImageSlice> imageSlices;
@@ -16,9 +17,8 @@ public class CTImageStack {
     private FractureCollection fractures;
 
     /**
-     * Constructor that takes an arraylist of image files and 
-     * creates and adds ImageSlices
-     * @param files ArrayList of files 
+     * Constructor that takes an arraylist of image slices and 
+     * @param ArrayList<CTImageSlice> imageSlices loaded in 
      */
     public CTImageStack(ArrayList<CTImageSlice> imageSlices) {
         this.imageSlices = imageSlices;
@@ -51,11 +51,10 @@ public class CTImageStack {
 
 
     /**
-     * Runs detection on all CTImageSlices in parallel 
-     * to find fracture voxels and join them into fractures 
+     * Runs detection on all CTImageSlices 
+     * to find fracture voxels and join them into fractures objects
      */
     public void detectFractures() {
-        // TODO: do in parallel 
         if (fractures == null) {
             ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
             for (CTImageSlice imageSlice : imageSlices) {
@@ -65,10 +64,13 @@ public class CTImageStack {
         }
     }
 
+    /**
+     * loads Fracures in from saved file and assigns them the Fracture collection object
+     * @param File text file to load fractures in
+     */
     public void loadFractures(File file) throws FileNotFoundException {
         if (fractures == null) {
             ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
-            //File file = new File(fileName);
             Scanner scan = new Scanner(file);
             while (scan.hasNextLine()){
                 String line = scan.nextLine();
@@ -84,6 +86,10 @@ public class CTImageStack {
         }
     }
 
+    /**
+     * Saves detected fractures to a text file for future loading
+     * @param File text file to save fractures
+     */
     public File saveFractures(File file) throws IOException {
         FileWriter writer = new FileWriter(file);
         BufferedWriter buffer = new BufferedWriter(writer);
@@ -109,6 +115,11 @@ public class CTImageStack {
         return fractures;
     }
 
+    /**
+     * loads Fracures in from saved file and assigns them the Fracture collection object
+     * @param int xCoOrd 
+     * @return BufferedImage for overlay for the x-view
+     */
     public BufferedImage getXviewImage(int xCoOrd) {
         BufferedImage image = new BufferedImage(imageSlices.get(0).getXDimension(), imageSlices.get(0).getYDimension(), BufferedImage.TYPE_INT_ARGB);
         for (CTImageSlice imageSlice : imageSlices) {
@@ -118,17 +129,17 @@ public class CTImageStack {
                 Color[] data = imageSlice.getXview(xCoOrd);
                 for (int x = 0; x < data.length; x++) {
                     image.setRGB(x, imageSlice.getZCoOrd(), data[x].getRGB());
-                    // if (imageSlice.getZCoOrd() == 68) {
-                    //     image.setRGB(x, imageSlice.getZCoOrd(), new Color(200,100,23,255).getRGB());
-                    // }
-                }
-                
-            }
-            
+                } 
+            }  
         }
         return image;
     }
 
+    /**
+     * loads Fracures in from saved file and assigns them the Fracture collection object
+     * @param int yCoOrd 
+     * @return BufferedImage for overlay for the y view
+     */
     public BufferedImage getYviewImage(int yCoOrd) {
         BufferedImage image = new BufferedImage(imageSlices.get(0).getXDimension(), imageSlices.get(0).getYDimension(), BufferedImage.TYPE_INT_ARGB);
         for (CTImageSlice imageSlice : imageSlices) {

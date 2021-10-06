@@ -4,7 +4,8 @@ import java.awt.*;
 
 
 /**
- * Fracture
+ *  Fracture Class is used to create objects that store a grouped collection of Fracture Voxels
+ *  @author SCTMIC015, SMTJUL022, BLRDAV002
  */
 public class Fracture {
     private ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>(); 
@@ -82,14 +83,11 @@ public class Fracture {
      * @param FractureVoxel fracture voxel being checked 
      */
     public boolean isPartOfFracture(FractureVoxel i){
-        
         for (FractureVoxel f : fractureVoxels){
             if(f.isNeighbourVoxel(i) == true){
                 return true;
             }
         }
-
         return false;        
-    }
-    
+    }    
 }

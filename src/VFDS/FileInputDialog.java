@@ -10,9 +10,16 @@ import java.util.Collections;
 import java.util.Comparator;
 
 
+/**
+ *  Class aids file handler is assigning file extensions, filters and other useful methods.
+ *  @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class FileInputDialog extends JFrame{
 
 
+    /**
+    * empty constructor
+    */
     public FileInputDialog() {
     }
 
@@ -22,12 +29,9 @@ public class FileInputDialog extends JFrame{
      * @throws FileNotFoundException
      */
     public ArrayList<File> getFilesFromUser() throws FileNotFoundException {
-        // TODO: destory entire frame on close
         this.setVisible(true);
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setMultiSelectionEnabled(true); // allow selection of multiple files
-        //fileChooser.setFileFilter(new PGMFilenameFilter()); // only accept .pgm
-        //fileChooser.setAcceptAllFileFilterUsed(true); // remove all files option
         FileNameExtensionFilter filter = new FileNameExtensionFilter("PGM Files","pgm");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
@@ -54,7 +58,4 @@ public class FileInputDialog extends JFrame{
             throw new FileNotFoundException("No File Selected");
         }
     }
-
-
-
 }

@@ -1,9 +1,8 @@
 package VFDS;
-
-import java.util.ArrayList;
-
 /**
- * FractureVoxel
+ *  Fracture Voxel objects represent detected fracture voxels
+ *  and store their co-ordinates, as well as other data needed for grouping
+ *  @author SCTMIC015, SMTJUL022, BLRDAV002
  */
 public class FractureVoxel {
     public int zCoOrd;
@@ -11,6 +10,9 @@ public class FractureVoxel {
     public int yCoOrd;
     private Fracture assignedFracture; // Ref. to Fracture this voxel is assigned to 
 
+    /**
+    *  Generic Constructor
+    */
     public FractureVoxel(int zCoOrd, int xCoOrd, int yCoOrd) {
         this.xCoOrd = xCoOrd;
         this.yCoOrd = yCoOrd;
@@ -41,6 +43,10 @@ public class FractureVoxel {
         return zCoOrd;
     }
 
+    /**
+     * method gets voxel co-ordinates for file saving
+     * @return voxel co-ordinates for file saving
+     */
     public String getAll() {
         return (this.getX() + " , " + this.getY() + " , " + this.getZ());
     }
@@ -48,18 +54,15 @@ public class FractureVoxel {
 
     /**
      * Checks whether the given voxel is a neighbour to this voxel
-     * 
      * NOTE: returns false if the same voxel is given (equality doesnt mean neighbor)
      * @param neighbourVoxel
      * @return boolean True if it is a neighbour, False if it isn't or they the same voxel
      */
     public boolean isNeighbourVoxel(FractureVoxel neighbourVoxel){
-        // TODO: add z plane
         if (neighbourVoxel.getX() - this.getX() >= -1 && neighbourVoxel.getX() - this.getX() <= 1 && 
             neighbourVoxel.getY() - this.getY() >= -1 && neighbourVoxel.getY() - this.getY() <= 1 &&
             neighbourVoxel.getZ() - this.getZ() >= -1 && neighbourVoxel.getZ() - this.getZ() <= 1) {
                 if (neighbourVoxel.getX() == this.getX() && neighbourVoxel.getY() == this.getY() && neighbourVoxel.getZ() == this.getZ()) {
-                    // same voxel not neighbour
                     return false;
                 }else{
                     return true;
@@ -82,7 +85,6 @@ public class FractureVoxel {
 
     /**
      * Gets reference to the fracture this voxel is assigned to
-     * 
      * Note: null if not assigned fracture 
      * @return Fracture reference to the fracture this voxel is assigned to
      */
@@ -104,6 +106,11 @@ public class FractureVoxel {
         return true;
     }
 
+    /**
+     * Method checks if inpuuted voxel is the same as the one calling the method
+     * @param FractureVoxel
+     * @return boolean value
+     */
     public boolean equals(FractureVoxel test){
         if (this.xCoOrd == test.getX() && this.yCoOrd == test.getY() && this.zCoOrd == test.zCoOrd){
             return true;
