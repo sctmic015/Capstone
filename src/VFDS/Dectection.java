@@ -87,7 +87,7 @@ public class Dectection {
         ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>();
         for (int x = 5; x < imageSlice.getXDimension() -5; x ++){
             for (int y = 5; y < imageSlice.getYDimension() -5; y ++){
-                System.out.println(LOWER_BOUND_THRESHOLD + " " + UPPER_BOUND_THRESHOLD);
+                //System.out.println(LOWER_BOUND_THRESHOLD + " " + UPPER_BOUND_THRESHOLD);
                 int voxelValue = imageSlice.getImageData()[x][y];
                 // if (voxelValue > 0 && voxelValue < 10) {
                 //     System.out.println(voxelValue);

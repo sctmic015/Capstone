@@ -104,4 +104,12 @@ public class FractureVoxel {
         return true;
     }
 
+    public boolean equals(FractureVoxel test){
+        if (this.xCoOrd == test.getX() && this.yCoOrd == test.getY() && this.zCoOrd == test.zCoOrd){
+            return true;
+        }
+        else
+            return false;
+    }
+
 }
