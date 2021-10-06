@@ -71,8 +71,8 @@ public class Detection {
          }
 
 
-         LOWER_BOUND_THRESHOLD = tempLower;
-         UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.2);
+         LOWER_BOUND_THRESHOLD = (int) (tempLower - (tempHigher -tempLower)*0.15);
+         UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.25);
 
      }
 
