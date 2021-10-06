@@ -138,6 +138,11 @@ public class FractureCollection {
         }
     }
 
+    public ArrayList<Fracture> getFractures() {
+        return arrFractures;
+    }
+
+
     public static Fracture combineFractures(ArrayList<Fracture> fractureArray){
         //combine fractures
         Fracture fracture = new Fracture();

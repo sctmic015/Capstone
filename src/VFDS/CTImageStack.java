@@ -1,7 +1,8 @@
 package VFDS;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Scanner;
 import java.awt.image.*;
 import java.awt.*;
 
@@ -61,6 +62,39 @@ public class CTImageStack {
             }
             fractures = new FractureCollection(allFractureVoxels);
         }
+    }
+
+    public void loadFractures(File file) throws FileNotFoundException {
+        if (fractures == null) {
+            ArrayList<FractureVoxel> allFractureVoxels = new ArrayList<FractureVoxel>();
+            //File file = new File(fileName);
+            Scanner scan = new Scanner(file);
+            while (scan.hasNextLine()){
+                String line = scan.nextLine();
+                Scanner scan2 = new Scanner(line);
+                scan2.useDelimiter("\\s*,\\s*");
+                int x = scan2.nextInt();
+                int y = scan2.nextInt();
+                int z = scan2.nextInt();
+                FractureVoxel temp = new FractureVoxel(z, x, y);
+                allFractureVoxels.add(temp);
+            }
+            fractures = new FractureCollection(allFractureVoxels);
+        }
+    }
+
+    public File saveFractures(File file) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        BufferedWriter buffer = new BufferedWriter(writer);
+        ArrayList<Fracture> frac = this.fractures.getFractures();
+        for (Fracture x: frac){
+            ArrayList<FractureVoxel> tempVoxels = x.getFractureVoxels();
+            for (FractureVoxel y: tempVoxels){
+                buffer.write(y.getAll() + "\n");
+            }
+        }
+        buffer.close();
+        return file;
     }
 
     /**
