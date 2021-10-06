@@ -101,10 +101,10 @@ public class FileHandler {
                 // System.out.println();
             }
             inputStream.close();
+            System.out.println("Read in PGM file: "+fileName);
             return imageData;
         } catch (Exception e) {
             // TODO: resolve the issue of if this actually corrupts
-            // TODO Auto-generated catch block
             e.printStackTrace();
             int[][] result = new int[0][0];
             return result;

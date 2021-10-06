@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * A class representing a CT image slice object
  * @author SCTMIC015, SMTJUL022, BLRDAV002
  */
-public class CTImageSlice {
+public class CTImageSlice implements Comparable{
 
     private int zCoOrd;
     private int xDimension;
@@ -125,6 +125,39 @@ public class CTImageSlice {
      */
     private void detectFractureVoxels() {
         fractureVoxels = Dectection.findFractureVoxels(this);
+    }
+
+    /**
+     * Gets 1d array of an x-axis side view of the image slice 
+     * @param xCoOrd
+     * @return 1d array of an x-axis side view of the image slice
+     */
+    public int[] getXview(int xCoOrd) {
+        int[] data = new int[xDimension];
+        for (int y = 0; y < data.length; y++) {
+            data[y] = imageData[xCoOrd][y]; // TODO: fracture colour?
+        }
+        return data;
+    }
+
+    /**
+     * Gets 1d array of an y-axis side view of the image slice 
+     * @param xCoOrd
+     * @return 1d array of an y-axis side view of the image slice
+     */
+    public int[] getYview(int yCoOrd) {
+        int[] data = new int[yDimension];
+        for (int x = 0; x < data.length; x++) {
+            data[x] = imageData[x][yCoOrd]; // TODO: fracture colour?
+        }
+        return data;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        // TODO: class check
+        CTImageSlice other = (CTImageSlice) o;
+        return this.zCoOrd-other.getZCoOrd();
     }
 
 }
