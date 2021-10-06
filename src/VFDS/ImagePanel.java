@@ -5,6 +5,7 @@ import java.awt.image.*;
 
 public class ImagePanel extends JPanel{
 
+    //GUI scales to size of screen by using screen height rather than a hard coded value    
     private static final int PANEL_SIZEX = (int)(GUI.dim.height/1.5);
     private static final int PANEL_SIZEY = (int)(GUI.dim.height/1.5);
     // Instance variables 
