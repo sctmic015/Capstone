@@ -88,11 +88,10 @@ public class GUI extends JFrame{
                 // this will load in images by reading in image files, creating image slices 
                 // and generating a CTImageStack which is stored locally here in GUI object
                 try {
-                    fileHandler.loadImages();
-                    Detection.findThresholds(imageStack);  // get threshold for images
+                fileHandler.loadImages();
                 } catch (Exception e) {
-                    System.out.println("Make sure to pass GUI to FileHandler");
-                    System.out.println("Or... user may not have selecred any files?");
+                    e.printStackTrace();
+                    System.out.println("Make srue to pass GUI to FileHandler");
                 }
                 popup.hide();
                 // re-enable buttons
@@ -100,6 +99,9 @@ public class GUI extends JFrame{
                 loadImagesButton.setEnabled(true);
                 saveFracturesButton.setEnabled(true);
                 loadFracturesButton.setEnabled(true);
+
+                Detection.findThresholds(imageStack);  // get threshold for images
+                
             }
         });
         detectFracturesButton.addActionListener(new java.awt.event.ActionListener() {
@@ -124,8 +126,17 @@ public class GUI extends JFrame{
                     File file = fileHandler.saveFractures();
                     imageStack.saveFractures(file);
                 } catch (Exception e) {
-                    System.out.println("User didnt save file anywhere?");
+                    e.printStackTrace();
                 }
+
+                /*
+                try {
+                    imageStack.saveFractures();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                 */
             }
         });
 
@@ -141,9 +152,7 @@ public class GUI extends JFrame{
                 try {
                     File file = fileHandler.loadSavedFractures();
                     imageStack.loadFractures(file);
-                } catch (Exception e) {
-                    System.out.println("User didnt select fracture file?");
-                }
+                } catch (Exception e) {}
 
                 popup.hide();
                 imagePanel.repaint();

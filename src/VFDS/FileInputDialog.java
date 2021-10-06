@@ -3,7 +3,6 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,9 +18,8 @@ public class FileInputDialog extends JFrame{
     /**
      * Displays filechooser popup to user to let them load .pgm images 
      * @return ArrayList of Files selected by user 
-     * @throws FileNotFoundException
      */
-    public ArrayList<File> getFilesFromUser() throws FileNotFoundException {
+    public ArrayList<File> getFilesFromUser() {
         // TODO: destory entire frame on close
         this.setVisible(true);
         JFileChooser fileChooser = new JFileChooser();
@@ -36,7 +34,7 @@ public class FileInputDialog extends JFrame{
         fileChooser.setPreferredSize(new Dimension((int)(dim.width*.6),(int)(dim.height*.8)));
 
         int returnVal = fileChooser.showDialog(this, "Load images");
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal==0) {
             this.dispose();
             ArrayList<File> files = new ArrayList<File>();
             files.addAll(Arrays.asList( fileChooser.getSelectedFiles() ));
@@ -51,7 +49,7 @@ public class FileInputDialog extends JFrame{
             return files;
         }else{
             this.dispose();
-            throw new FileNotFoundException("No File Selected");
+            return null;
         }
     }
 
