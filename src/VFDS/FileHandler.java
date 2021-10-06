@@ -122,4 +122,20 @@ public class FileHandler {
         CTImageStack imageStack = new CTImageStack(imageSlices);
         return imageStack;
     }
+
+    public File loadSavedFractures() throws Exception{
+        FileInputDialog fileOpener = new FileInputDialog();
+        ArrayList<File> files = fileOpener.getFilesFromUser();
+
+        if (gui == null) {
+            throw new Exception("No GUI attached to FileHandler");
+        }
+        if (files != null) {
+            // Given files, create CTImageStack and pass that to the GUI
+            // NOTE: the createCTImageStack(files) method will do the converting from file -> CTImageSlice
+            return files.get(0);
+        }
+        return files.get(0);
+    }
+
 }

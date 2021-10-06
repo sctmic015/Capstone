@@ -2,6 +2,8 @@ package VFDS;
 import javax.swing.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.io.*;
+import java.util.*;
 
 public class GUI extends JFrame{
     // Dimensions of GUI window
@@ -18,12 +20,14 @@ public class GUI extends JFrame{
     private XYImageFrame yView;
     private CTImageStack imageStack;
     private FileHandler fileHandler;
+    private FileChooser fileChooser;
 
     /**
      * Constructor that sets up basic UI 
      */
     public GUI() {
         this.fileHandler = new FileHandler(this);
+        this.fileChooser = new FileChooser(this);
         this.setupGUI();
     }
 
@@ -88,7 +92,7 @@ public class GUI extends JFrame{
                 detectFracturesButton.setEnabled(true);
                 loadImagesButton.setEnabled(true); 
 
-                // Dectection.findThresholds(imageStack);  // get threshold for images                   
+                Dectection.findThresholds(imageStack);  // get threshold for images
                 
             }
         });
@@ -105,6 +109,48 @@ public class GUI extends JFrame{
                 detectFracturesButton.setEnabled(true);
             }
         });
+
+        saveFracturesButton.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                try{
+                    File file = fileChooser.saveFractures();
+                    imageStack.saveFractures(file);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                /*
+                try {
+                    imageStack.saveFractures();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                 */
+            }
+        });
+
+        loadFracturesButton.addActionListener(new java.awt.event.ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent evt){
+                PopupFactory pf = new PopupFactory();
+                JPanel popupFrame = new JPanel();
+                //popupFrame.add(new JLabel("Loading in images..."));
+                Popup popup = pf.getPopup(imagePanel, popupFrame, 300, 300);
+                popup.show();
+                // this will load in images by reading in image files, creating image slices
+                // and generating a CTImageStack which is stored locally here in GUI object
+                try {
+                    File file = fileHandler.loadSavedFractures();
+                    imageStack.loadFractures(file);
+                } catch (Exception e) {}
+
+                popup.hide();
+                imagePanel.repaint();
+
+
+            }
+        });
+
 
 
         // ImageSlider Setup
@@ -163,9 +209,11 @@ public class GUI extends JFrame{
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(loadFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(imageSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,9 +228,11 @@ public class GUI extends JFrame{
                     .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(loadFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(detectFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loadImagesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(saveFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         // Render neatly
         pack();

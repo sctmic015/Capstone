@@ -41,6 +41,11 @@ public class FractureVoxel {
         return zCoOrd;
     }
 
+    public String getAll() {
+        return (this.getX() + " , " + this.getY() + " , " + this.getZ());
+    }
+
+
     /**
      * Checks whether the given voxel is a neighbour to this voxel
      * 
