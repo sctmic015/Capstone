@@ -1,8 +1,18 @@
 package VFDS;
 import java.util.*;
 
+/**
+ * Class to Smooth the Image Object and Remove Noise
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
+
 public class Smoothing {
 
+    /**
+     * Smooths the Data using a Simple moving Average
+     * @param imageData
+     * @return
+     */
     public static int[][] SimpleMovingAverage(int[][] imageData) {
         int[][] smoothedImage = new int[imageData.length][imageData.length];
         for (int x = 1; x < imageData.length-1; x ++){
@@ -16,6 +26,11 @@ public class Smoothing {
         return smoothedImage;
     }
 
+    /**
+     * Smooths the Data Using a Median Filter
+     * @param imageData
+     * @return
+     */
     public static int[][] medianFilter(int[][] imageData){
         int[][] smoothedImage = new int[imageData.length][imageData.length];
 

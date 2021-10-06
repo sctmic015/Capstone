@@ -7,6 +7,10 @@ import java.io.*;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
+/**
+ * A class used to initiate and create the GUI for Volumetric Detection System
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class GUI extends JFrame{
     // Dimensions of GUI window
     static Toolkit toolkit =  Toolkit.getDefaultToolkit ();
@@ -47,8 +51,7 @@ public class GUI extends JFrame{
     
 
     /**
-     * Used to setup the user interface ]
-     * 
+     * Used to setup the user interface
      * Note: No Image slice is rendered at this point 
      */
     public void setupGUI() {
@@ -85,6 +88,8 @@ public class GUI extends JFrame{
                 popupFrame.add(new JLabel("Loading in images..."));
                 Popup popup = pf.getPopup(imagePanel, popupFrame, 300, 300);
                 popup.show();
+
+
                 // this will load in images by reading in image files, creating image slices 
                 // and generating a CTImageStack which is stored locally here in GUI object
                 try {
@@ -92,7 +97,7 @@ public class GUI extends JFrame{
                     Detection.findThresholds(imageStack);  // get threshold for images
                 } catch (Exception e) {
                     System.out.println("Make sure to pass GUI to FileHandler");
-                    System.out.println("Or... user may not have selecred any files?");
+                    System.out.println("Or... user may not have selected any files?");
                 }
                 popup.hide();
                 // re-enable buttons
@@ -278,7 +283,7 @@ public class GUI extends JFrame{
 
     /**
      * Sets image stack this GUI is responsible for
-     * and displays first image in the stack 
+     * and displays first image in the stack along x, y and z axi
      * @param imageStack image stack to associate with this gui 
      */
     public void setImageStack(CTImageStack imageStack) {

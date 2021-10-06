@@ -18,16 +18,23 @@ import java.util.concurrent.ForkJoinPool;
  *  - Loading in PGM image files 
  *  - Saving fracture data 
  *  - Loading fracture data
+ *   * @author SCTMIC015, SMTJUL022, BLRDAV002
  */
 public class FileHandler {
     private GUI gui;
     private File selectedFile;
     private File fileToSave;
 
-
+    /**
+     * Empty Constructor
+     */
     public FileHandler() {
     }
 
+    /**
+     * Constructor that passes the GUI to the FileHandler Object
+     * @param gui
+     */
     public FileHandler(GUI gui) {
         this.gui=gui;
     }
@@ -43,6 +50,7 @@ public class FileHandler {
         // Request files rom user
         FileInputDialog fileOpener = new FileInputDialog();
         ArrayList<File> files = fileOpener.getFilesFromUser();
+
 
         if (gui == null) {
             throw new Exception("No GUI attached to FileHandler");
@@ -113,13 +121,18 @@ public class FileHandler {
         }
     }
 
+    /**
+     * Creates a CTImageStack from an ArrayList of PGM Files using the Fork-Join Framework
+     * @param files
+     * @return CTImageStack
+     */
     private CTImageStack createCTImageStack(ArrayList<File> files) {
         // Given files, creates CTImageSlices for each file
         // Does this in parallel using ForkJoin framework
         ArrayList<CTImageSlice> imageSlices=new ArrayList<CTImageSlice>();
+
         ForkJoinReadInFile readInAction = new ForkJoinReadInFile(imageSlices, files, 0);
         new ForkJoinPool().invoke(readInAction);
-
         // Takes abocve CTImageSlices and creates CTImageStack
         CTImageStack imageStack = new CTImageStack(imageSlices);
         return imageStack;
