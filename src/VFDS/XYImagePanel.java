@@ -3,6 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 
+/**
+* Class sets up the image panels for the alternative views.
+* @author SCTMIC015, SMTJUL022, BLRDAV002
+*/
 public class XYImagePanel extends JPanel{
     private static final int PANEL_SIZE = 384;
     // Instance variables 
@@ -63,14 +67,8 @@ public class XYImagePanel extends JPanel{
                     img = imageStack.getYviewImage(coOrd).getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0);
                 }
                 g.drawImage(img, 0, 0, null);
-            }
-            // draw the overlay image to show fracture colours 
-            if (imageStack.getFractures() != null) {
-                // TODO: fractures 
-                // overlayImage = imageStack.getFractures().getImage(currentImageSlice.getZCoOrd(), currentImageSlice.getImage().getWidth(), currentImageSlice.getImage().getHeight());
-                // g.drawImage(overlayImage.getScaledInstance(XYImagePanel.PANEL_SIZE, XYImagePanel.PANEL_SIZE, 0), 0, 0, null);
-            }
-        }
+            } 
+         }
 	}
 
 

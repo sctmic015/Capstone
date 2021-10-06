@@ -3,6 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 
+/**
+* Class sets up main image panel for GUI, in which the main functioning features are displayed
+* @author SCTMIC015, SMTJUL022, BLRDAV002
+*/
 public class ImagePanel extends JPanel{
 
     //GUI scales to size of screen by using screen height rather than a hard coded value    

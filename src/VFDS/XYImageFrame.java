@@ -3,10 +3,13 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
+
+/**
+ *  Class sets up the infrastructure for the alternative views thoruhg the creation of frames.
+ *  @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class XYImageFrame extends JFrame{
-    private static final int PANEL_SIZE = 600;
     // Instance variables 
     private CTImageStack imageStack;
     private int xyStyle; // 0=x-axis 1=y-axis
@@ -17,13 +20,21 @@ public class XYImageFrame extends JFrame{
     private JSlider imageSlider;
 
 
-
+    /**
+     * Constructor
+     * @param int xyStle
+     */
     public XYImageFrame(int xyStyle) {
         this.xyStyle = xyStyle==0 ? 0 : 1;
         initComponents();
         this.setVisible(true);
     }
     
+    /**
+     * Constructor
+     * @param int xyStle
+     * @param CTImageStack
+     */
     public XYImageFrame(int xyStyle,CTImageStack imageStack) {
         this.xyStyle = xyStyle==0 ? 0 : 1;
         this.imageStack=imageStack;
@@ -31,6 +42,9 @@ public class XYImageFrame extends JFrame{
         this.setVisible(true);
     }
 
+    /**
+     * Method intializes frame components
+     */
     private void initComponents() {
         setTitle(xyStyle==0 ? "X axis slice" : "Y axis slice");
         imagePanel = new XYImagePanel(xyStyle);
@@ -131,11 +145,17 @@ public class XYImageFrame extends JFrame{
         pack();
     }
 
+    /**
+     * Method Repaints the frame
+     */
     public void refresh() {
         this.imageSlider.setEnabled(true);
         this.imagePanel.repaint();
     }
 
+    /**
+     * Method sets the local image stack so that it can be used to display data on the frame
+     */
     public void setImageStack(CTImageStack imageStack) {
         this.imageStack=imageStack;
         int numSlices = imageStack == null ? 0 : imageStack.getImageSlice(0).getXDimension()-1;
