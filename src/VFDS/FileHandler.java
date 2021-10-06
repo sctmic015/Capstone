@@ -172,7 +172,9 @@ public class FileHandler {
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text file","txt");
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
+        fileChooser.addChoosableFileFilter(filter);
         fileChooser.setDialogTitle("Specify a file to save");
+
 
         int userSelection = fileChooser.showSaveDialog(parentFrame);
 

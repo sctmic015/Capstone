@@ -151,7 +151,7 @@ public class GUI extends JFrame{
                 }
 
                 popup.hide();
-                imagePanel.repaint();
+
 
 
             }

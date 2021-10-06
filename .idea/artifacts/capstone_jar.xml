@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="capstone:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/capstone_jar</output-path>
+    <root id="archive" name="capstone.jar">
+      <element id="module-output" name="capstone" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/junit4.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$APPLICATION_HOME_DIR$/lib/javaml-0.1.7/javaml-0.1.7.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

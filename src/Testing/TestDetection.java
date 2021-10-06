@@ -12,6 +12,10 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Testing the detection algorithm against the model fracture answers provided
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class TestDetection {
 
     @Test
@@ -66,6 +70,11 @@ public class TestDetection {
         System.out.println(System.nanoTime() - startTime);
     }
 
+    /**
+     * Reads PGM files into a 2 dimensional int array
+     * @param file
+     * @return
+     */
     public static int[][] readPGM(File file) {
         try {
             String fileName = file.getPath();
@@ -124,7 +133,11 @@ public class TestDetection {
     }
 
 
-    // Get test Fracture Voxels
+    /**
+     * Creates an ArrayList of Fracture Voxels from the Model Answer Fractures
+     * @param testStack
+     * @return
+     */
     public static ArrayList<FractureVoxel> writeTestFractures(ArrayList<int[][]> testStack){
         ArrayList<FractureVoxel> testFractures = new ArrayList<FractureVoxel>();
         for (int i = 0; i < testStack.size(); i ++){
@@ -140,6 +153,11 @@ public class TestDetection {
         return testFractures;
     }
 
+    /**
+     * Compares our detected FractureVoxels to those of the model answer
+     * @param test
+     * @param results
+     */
     public static void testInfo(ArrayList<FractureVoxel> test, ArrayList<FractureVoxel> results){
         double countMatches = 0;
         double testSize = test.size();
@@ -162,6 +180,12 @@ public class TestDetection {
         System.out.println("Percentage of fractures detected = " + percentage + "%");
     }
 
+    /**
+     * Tests in an ArrayList of Fracturevoxels contains a fractureVoxel
+     * @param test
+     * @param fractureVoxel
+     * @return
+     */
     public static boolean contains(ArrayList<FractureVoxel> test, FractureVoxel fractureVoxel){
         for (int i = 0; i < test.size(); i ++){
             if (fractureVoxel.equals(test.get(i))){

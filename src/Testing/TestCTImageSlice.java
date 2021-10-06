@@ -6,6 +6,11 @@ import static org.junit.Assert.assertNotNull;
 import java.io.File;
 import org.junit.Test;
 
+/**
+ * Unit Tests for Testing CTImage Slice
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
+
 public class TestCTImageSlice {
 
     public TestCTImageSlice() {
