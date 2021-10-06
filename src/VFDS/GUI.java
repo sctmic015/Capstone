@@ -100,7 +100,7 @@ public class GUI extends JFrame{
                 saveFracturesButton.setEnabled(true);
                 loadFracturesButton.setEnabled(true);
 
-                Dectection.findThresholds(imageStack);  // get threshold for images
+                Detection.findThresholds(imageStack);  // get threshold for images
                 
             }
         });

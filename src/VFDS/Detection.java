@@ -2,7 +2,7 @@ package VFDS;
 
 import java.util.ArrayList;
 
-public class Dectection {
+public class Detection {
 
     static int LOWER_BOUND_THRESHOLD = 200;
     static int UPPER_BOUND_THRESHOLD = 200;

@@ -2,7 +2,7 @@ package Testing;
 
 import VFDS.CTImageSlice;
 import VFDS.CTImageStack;
-import VFDS.Dectection;
+import VFDS.Detection;
 import VFDS.FractureVoxel;
 import org.junit.Test;
 
@@ -53,11 +53,11 @@ public class TestDetection {
         ArrayList<FractureVoxel> testFractures = writeTestFractures(testStack);
 
         ArrayList<FractureVoxel> fractureVoxels = new ArrayList<FractureVoxel>();
-        Dectection.findThresholds(CTStack);
+        Detection.findThresholds(CTStack);
        // System.out.println("Lower threshold:= " + Dectection.LOWER_BOUND_THRESHOLD + " Upper threshold:= " + Dectection.UPPER_BOUND_THRESHOLD);
 
         for (int i = 0; i < numFiles; i++) {
-            ArrayList<FractureVoxel> fractureVoxelsLine = Dectection.findFractureVoxels(CTStack.getImageSlice(i));
+            ArrayList<FractureVoxel> fractureVoxelsLine = Detection.findFractureVoxels(CTStack.getImageSlice(i));
             fractureVoxels.addAll(fractureVoxelsLine);
         }
         System.out.println(testFractures.size());
