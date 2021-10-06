@@ -173,14 +173,16 @@ public class FileHandler {
 
         JFileChooser fileChooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Text File","txt");
-        fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
+        fileChooser.addChoosableFileFilter(filter);
         fileChooser.setDialogTitle("Specify a file to save");
+
 
         int userSelection = fileChooser.showSaveDialog(parentFrame);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             this.fileToSave = fileChooser.getSelectedFile();
+            this.fileToSave = new File(fileToSave + ".txt");
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
         }else{
             throw new FileNotFoundException("No File Selected");
