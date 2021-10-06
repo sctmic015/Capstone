@@ -125,6 +125,11 @@ public class FileHandler {
         return imageStack;
     }
 
+    /**
+     * Displays fracture load dialog to user and returns the file chosen 
+     * @return File file user chooses to load in
+     * @throws Exception
+     */
     public File loadSavedFractures() throws Exception{
         JFileChooser fileChooser = new JFileChooser();
         //fileChooser.setCurrentDirectory(new File(System.getProperty("user.home.Documents")));
@@ -137,10 +142,18 @@ public class FileHandler {
         if (result == JFileChooser.APPROVE_OPTION) {
             selectedFile = fileChooser.getSelectedFile();
             System.out.println("Selected file: " + selectedFile.getAbsolutePath());
-        }else
+        }else{
             throw new FileNotFoundException("No File Selected");
+        }
         return selectedFile;
     }
+
+
+    /**
+     * Called to display fracture save dialog to user
+     * @return File file object that fractures need to be saved to
+     * @throws FileNotFoundException
+     */
     public File saveFractures() throws FileNotFoundException {
         // parent component of the dialog
         JFrame parentFrame = new JFrame();
@@ -156,8 +169,9 @@ public class FileHandler {
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             this.fileToSave = fileChooser.getSelectedFile();
             System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-        }else
+        }else{
             throw new FileNotFoundException("No File Selected");
+        }
         return fileToSave;
     }
 }
