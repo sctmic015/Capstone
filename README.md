@@ -15,7 +15,7 @@ them in at a later stage.
 # Getting started 
 
 The program should compile on all IDE's. A .Jar file is 
-provided in the directory /out/artifacts/capstone_jar which 
+provided in the directory which 
 can be run immediately.
 
 # Using the GUI 
