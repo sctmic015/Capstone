@@ -114,9 +114,9 @@ public class CTImageStack {
             if (imageSlice==null) { 
                 System.out.println("missing image in slice position");
             }else{
-                int[] data = imageSlice.getXview(xCoOrd);
+                Color[] data = imageSlice.getXview(xCoOrd);
                 for (int x = 0; x < data.length; x++) {
-                    image.setRGB(x, imageSlice.getZCoOrd(), new Color(data[x],data[x],data[x],255).getRGB());
+                    image.setRGB(x, imageSlice.getZCoOrd(), data[x].getRGB());
                     // if (imageSlice.getZCoOrd() == 68) {
                     //     image.setRGB(x, imageSlice.getZCoOrd(), new Color(200,100,23,255).getRGB());
                     // }
@@ -135,9 +135,9 @@ public class CTImageStack {
                 // missing image in slice position 
                 System.out.println("missing image in slice position");
             }else{
-                int[] data = imageSlice.getYview(yCoOrd);
+                Color[] data = imageSlice.getYview(yCoOrd);
                 for (int y = 0; y < data.length; y++) {
-                    image.setRGB(y, imageSlice.getZCoOrd(), new Color(data[y],data[y],data[y],255).getRGB());
+                    image.setRGB(y, imageSlice.getZCoOrd(), data[y].getRGB());
                     // TODO: remove
                     // if (imageSlice.getZCoOrd() == 77) {
                     //     image.setRGB(imageSlice.getZCoOrd(), y, new Color(200,100,23,255).getRGB());

@@ -131,9 +131,9 @@ public class XYImageFrame extends JFrame{
         pack();
     }
 
-    public void refresh(int xCoOrd) {
+    public void refresh() {
         this.imageSlider.setEnabled(true);
-        this.imagePanel.displaySlice(xCoOrd);
+        this.imagePanel.repaint();
     }
 
     public void setImageStack(CTImageStack imageStack) {

@@ -1,6 +1,7 @@
 package VFDS;
 import java.awt.image.*;
 import java.awt.*;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -132,11 +133,19 @@ public class CTImageSlice implements Comparable{
      * @param xCoOrd
      * @return 1d array of an x-axis side view of the image slice
      */
-    public int[] getXview(int xCoOrd) {
-        int[] data = new int[xDimension];
+    public Color[] getXview(int xCoOrd) {
+        Color[] data = new Color[xDimension];
         for (int y = 0; y < data.length; y++) {
             // reason these are swapped is becuase x/y co-ords are wrong
-            data[y] = imageData[y][xCoOrd]; // TODO: fracture colour?
+            int color = imageData[y][xCoOrd];
+            data[y] = new Color(color,color,color,255);
+            if (fractureVoxels != null) {
+                for (FractureVoxel fractureVoxel : fractureVoxels) {
+                    if (fractureVoxel.getX() == xCoOrd && fractureVoxel.getY() == y) {
+                        data[y] = fractureVoxel.getAssignedFracture().getColor();
+                    }
+                }
+            }
         }
         return data;
     }
@@ -146,10 +155,18 @@ public class CTImageSlice implements Comparable{
      * @param xCoOrd
      * @return 1d array of an y-axis side view of the image slice
      */
-    public int[] getYview(int yCoOrd) {
-        int[] data = new int[yDimension];
+    public Color[] getYview(int yCoOrd) {
+        Color[] data = new Color[yDimension];
         for (int x = 0; x < data.length; x++) {
-            data[x] = imageData[yCoOrd][x]; // TODO: fracture colour?
+            int color = imageData[yCoOrd][x];
+            data[x] = new Color(color,color,color,255);
+            if (fractureVoxels != null) {
+                for (FractureVoxel fractureVoxel : fractureVoxels) {
+                    if (fractureVoxel.getX() == x && fractureVoxel.getY() == yCoOrd) {
+                        data[x] = fractureVoxel.getAssignedFracture().getColor();
+                    }
+                }
+            }
         }
         return data;
     }
