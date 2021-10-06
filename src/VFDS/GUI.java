@@ -22,14 +22,14 @@ public class GUI extends JFrame{
     private XYImageFrame yView;
     private CTImageStack imageStack;
     private FileHandler fileHandler;
-    private FileChooser fileChooser;
+    //private FileChooser fileChooser;
 
     /**
      * Constructor that sets up basic UI 
      */
     public GUI() {
         this.fileHandler = new FileHandler(this);
-        this.fileChooser = new FileChooser(this);
+        //this.fileChooser = new FileChooser(this);
         this.setupGUI();
     }
 
@@ -75,6 +75,8 @@ public class GUI extends JFrame{
                 // disable buttons
                 detectFracturesButton.setEnabled(false);
                 loadImagesButton.setEnabled(false);
+                saveFracturesButton.setEnabled(false);
+                loadFracturesButton.setEnabled(false);
                 // Show popup
                 PopupFactory pf = new PopupFactory();
                 JPanel popupFrame = new JPanel();
@@ -92,7 +94,9 @@ public class GUI extends JFrame{
                 popup.hide();
                 // re-enable buttons
                 detectFracturesButton.setEnabled(true);
-                loadImagesButton.setEnabled(true); 
+                loadImagesButton.setEnabled(true);
+                saveFracturesButton.setEnabled(true);
+                loadFracturesButton.setEnabled(true);
 
                 Dectection.findThresholds(imageStack);  // get threshold for images
                 
@@ -115,7 +119,7 @@ public class GUI extends JFrame{
         saveFracturesButton.addActionListener(new java.awt.event.ActionListener(){
             public void actionPerformed(java.awt.event.ActionEvent evt){
                 try{
-                    File file = fileChooser.saveFractures();
+                    File file = fileHandler.saveFractures();
                     imageStack.saveFractures(file);
                 } catch (Exception e) {
                     e.printStackTrace();
