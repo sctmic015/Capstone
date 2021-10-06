@@ -1,5 +1,9 @@
 package VFDS;
+import java.net.URL;
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.io.IOException;
 
 public class XYImageFrame extends JFrame{
     private static final int PANEL_SIZE = 600;
@@ -28,21 +32,30 @@ public class XYImageFrame extends JFrame{
     }
 
     private void initComponents() {
-        
+        setTitle(xyStyle==0 ? "X axis slice" : "Y axis slice");
         imagePanel = new XYImagePanel(xyStyle);
         imageSlider = new JSlider();
         iconViewPanel = new JPanel();
-        ImageIcon icon = new ImageIcon(xyStyle==0 ?
-            "/Users/david/Desktop/cubes/right-X.jpg" :
-            "/Users/david/Desktop/cubes/left-Z.jpg"
-        );
-        iconViewLabel = new JLabel(icon);
-        iconViewPanel.add(iconViewLabel);
-        iconViewPanel.setVisible(true);
+        iconViewLabel = new JLabel("IMAGE NOT FOUND");
+        // set icon 
+        try {
+            URL url;
+            if (xyStyle==0) {
+                url = new URL("https://i.imgur.com/k5mDPj6.jpg");
+            }else{
+                url = new URL("https://i.imgur.com/1wLL1bV.jpg");
+            }
+            Image image = ImageIO.read(url);
+            ImageIcon icon = new ImageIcon(image);
+            iconViewLabel = new JLabel(icon);
+            iconViewPanel.add(iconViewLabel);
+            iconViewPanel.setVisible(true);
+        } catch (Exception e1) {
+            System.out.println("Couldt fectch images for icons");
+        }
 
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        imagePanel.setBackground(new java.awt.Color(0, 0, 204));
 
         GroupLayout imagePanelLayout = new GroupLayout(imagePanel);
         imagePanel.setLayout(imagePanelLayout);
@@ -57,13 +70,15 @@ public class XYImageFrame extends JFrame{
 
         // Image slider
         imageSlider.setMinimum(0);
-        imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
+        int numSlices = imageStack == null ? 0 : imageStack.getImageSlice(0).getXDimension()-1;
+        imageSlider.setMaximum(numSlices);
         imageSlider.setValue(0);
         imageSlider.setEnabled(false);
         imageSlider.addChangeListener(e -> 
         {
             int sliceSelected = imageSlider.getValue();
-            System.out.println("X slice: "+sliceSelected);
+            String sliceString = xyStyle==0?"X slice: ":"Y slice: ";
+            System.out.println(sliceString + sliceSelected);
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
                 imagePanel.displaySlice(sliceSelected);
@@ -123,7 +138,8 @@ public class XYImageFrame extends JFrame{
 
     public void setImageStack(CTImageStack imageStack) {
         this.imageStack=imageStack;
-        imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
+        int numSlices = imageStack == null ? 0 : imageStack.getImageSlice(0).getXDimension()-1;
+        imageSlider.setMaximum(numSlices);
         imagePanel.setImageStack(imageStack);
     }
 }

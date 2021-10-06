@@ -2,8 +2,10 @@ package VFDS;
 import javax.swing.*;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
+import java.awt.*;
 import java.io.*;
-import java.util.*;
+import java.net.URL;
+import javax.imageio.ImageIO;
 
 public class GUI extends JFrame{
     // Dimensions of GUI window
@@ -199,7 +201,41 @@ public class GUI extends JFrame{
 
 		});
         
-        
+        // Layout - Icon
+            // ICON SETUP
+            JLabel iconViewLabel;
+            JPanel iconViewPanel;
+            iconViewPanel = new JPanel();
+            iconViewLabel = new JLabel("IMAGE NOT FOUND");
+            // set icon
+            try {
+                URL url= new URL("https://i.imgur.com/y2iQrQU.jpg");
+                Image image = ImageIO.read(url);
+                ImageIcon icon = new ImageIcon(image);
+                iconViewLabel = new JLabel(icon);
+                iconViewPanel.add(iconViewLabel);
+            } catch (Exception e1) {
+                System.out.println("Couldt fectch images for icons");
+            }
+            iconViewPanel.setVisible(true);
+
+        GroupLayout iconViewPanelLayout = new GroupLayout(iconViewPanel);
+        iconViewPanel.setLayout(iconViewPanelLayout);
+        iconViewPanelLayout.setHorizontalGroup(
+            iconViewPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(GroupLayout.Alignment.TRAILING, iconViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(iconViewLabel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        iconViewPanelLayout.setVerticalGroup(
+            iconViewPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addGroup(iconViewPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(iconViewLabel, GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         // Layout - Outter window
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,6 +253,7 @@ public class GUI extends JFrame{
                     .addComponent(imagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(imageSlider, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(iconViewPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -225,7 +262,8 @@ public class GUI extends JFrame{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(imageSlider, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(imagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(iconViewPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(loadFracturesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
