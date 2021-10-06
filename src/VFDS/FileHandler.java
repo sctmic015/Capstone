@@ -91,14 +91,7 @@ public class FileHandler {
             for (int row = 0; row < picHeight; row++) {
                 for (int col = 0; col < picWidth; col++) {
                     imageData[row][col] = inputStream.readUnsignedByte();
-                    /*
-                    if(imageData[row][col] > 200){
-                    // if(imageData[row][col] != 0 && imageData[row][col] != 200){
-                        System.out.print(imageData[row][col] + " ");
-                    }
-                    */
                 }
-                // System.out.println();
             }
             inputStream.close();
             System.out.println("Read in PGM file: "+fileName);

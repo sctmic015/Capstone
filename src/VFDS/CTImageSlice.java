@@ -135,7 +135,8 @@ public class CTImageSlice implements Comparable{
     public int[] getXview(int xCoOrd) {
         int[] data = new int[xDimension];
         for (int y = 0; y < data.length; y++) {
-            data[y] = imageData[xCoOrd][y]; // TODO: fracture colour?
+            // reason these are swapped is becuase x/y co-ords are wrong
+            data[y] = imageData[y][xCoOrd]; // TODO: fracture colour?
         }
         return data;
     }
@@ -148,7 +149,7 @@ public class CTImageSlice implements Comparable{
     public int[] getYview(int yCoOrd) {
         int[] data = new int[yDimension];
         for (int x = 0; x < data.length; x++) {
-            data[x] = imageData[x][yCoOrd]; // TODO: fracture colour?
+            data[x] = imageData[yCoOrd][x]; // TODO: fracture colour?
         }
         return data;
     }

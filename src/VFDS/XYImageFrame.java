@@ -32,7 +32,7 @@ public class XYImageFrame extends JFrame{
     }
 
     private void initComponents() {
-        
+        setTitle(xyStyle==0 ? "X axis slice" : "Y axis slice");
         imagePanel = new XYImagePanel(xyStyle);
         imageSlider = new JSlider();
         iconViewPanel = new JPanel();
@@ -41,9 +41,9 @@ public class XYImageFrame extends JFrame{
         try {
             URL url;
             if (xyStyle==0) {
-                url = new URL("https://i.imgur.com/1wLL1bV.jpg");
-            }else{
                 url = new URL("https://i.imgur.com/k5mDPj6.jpg");
+            }else{
+                url = new URL("https://i.imgur.com/1wLL1bV.jpg");
             }
             Image image = ImageIO.read(url);
             ImageIcon icon = new ImageIcon(image);
@@ -70,13 +70,15 @@ public class XYImageFrame extends JFrame{
 
         // Image slider
         imageSlider.setMinimum(0);
-        imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
+        int numSlices = imageStack == null ? 0 : imageStack.getImageSlice(0).getXDimension()-1;
+        imageSlider.setMaximum(numSlices);
         imageSlider.setValue(0);
         imageSlider.setEnabled(false);
         imageSlider.addChangeListener(e -> 
         {
             int sliceSelected = imageSlider.getValue();
-            System.out.println("X slice: "+sliceSelected);
+            String sliceString = xyStyle==0?"X slice: ":"Y slice: ";
+            System.out.println(sliceString + sliceSelected);
             if (imageStack != null) {
                 imageSlider.setEnabled(true);
                 imagePanel.displaySlice(sliceSelected);
@@ -136,7 +138,8 @@ public class XYImageFrame extends JFrame{
 
     public void setImageStack(CTImageStack imageStack) {
         this.imageStack=imageStack;
-        imageSlider.setMaximum(imageStack == null ? 0 : imageStack.getSize());
+        int numSlices = imageStack == null ? 0 : imageStack.getImageSlice(0).getXDimension()-1;
+        imageSlider.setMaximum(numSlices);
         imagePanel.setImageStack(imageStack);
     }
 }
