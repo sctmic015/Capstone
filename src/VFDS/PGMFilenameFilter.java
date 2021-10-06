@@ -4,6 +4,7 @@ import javax.swing.filechooser.FileFilter;
 
 /**
  * FileFilter for restricting user input to only select .pgm image files
+ *  * @author SCTMIC015, SMTJUL022, BLRDAV002
  */
 public class PGMFilenameFilter extends FileFilter {
 

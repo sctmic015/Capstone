@@ -46,9 +46,9 @@ public class CTImageSlice implements Comparable{
     }
     
     /**
-     * Contructor when image data has been extracted
+     * Contructor when parsing image Data in via a File object
      * @param zCoOrd position in stack of images (i.e., The images Z co-ordinate)
-     * @param imageData Image data represented as a 2D array
+     * @param imageFile PGM File of the image slice
      */
     public CTImageSlice(int zCoOrd, File imageFile){
         this.zCoOrd = zCoOrd;
@@ -76,14 +76,26 @@ public class CTImageSlice implements Comparable{
         }
     }
 
+    /**
+     * Gets the Z co-ordinate of the CTImageSlice
+     * @return int representing Z Co-ordinate
+     */
     public int getZCoOrd() {
         return this.zCoOrd;
     }
 
+    /**
+     * Gets the X co-ordinate of the CTImageSlice
+     * @return int representing X Co-ordinate
+     */
     public int getXDimension() {
         return this.xDimension;
     }
 
+    /**
+     * Gets the Y co-ordinate of the CTImageSlice
+     * @return int representing Y Co-ordinate
+     */
     public int getYDimension() {
         return this.yDimension;
     }
@@ -101,6 +113,10 @@ public class CTImageSlice implements Comparable{
         return image;
     }
 
+    /**
+     * Gets the imageData as a two dimensional array of intgers
+     * @return int[][] imageData array
+     */
     public int[][] getImageData() {
         // TODO: deep copy
         return this.imageData;
@@ -121,7 +137,7 @@ public class CTImageSlice implements Comparable{
 
     /**
      * Runs dectection on CTImageSlice to get fracture voxels
-     * 
+     *
      * NOTE: Fracture detection is not done in this class  
      */
     private void detectFractureVoxels() {
@@ -152,7 +168,7 @@ public class CTImageSlice implements Comparable{
 
     /**
      * Gets 1d array of an y-axis side view of the image slice 
-     * @param xCoOrd
+     * @param yCoOrd
      * @return 1d array of an y-axis side view of the image slice
      */
     public Color[] getYview(int yCoOrd) {

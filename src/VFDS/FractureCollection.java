@@ -1,22 +1,32 @@
 package VFDS;
 import java.awt.image.*;
 import java.util.ArrayList;
+
+/**
+ * A class to group FractureVoxel objects into Fracture Objects
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class FractureCollection {
     private ArrayList<Fracture> arrFractures = new ArrayList<Fracture>();
     
 
     /**
      * Create fracture collection from Fracture voxels
-     * and detect fracture groups
+     * ,detect fracture groups
+     * and asign colours to fractures
      * @param fractureVoxels
+     * @author SCTMIC015, SMTJUL022, BLRDAV002
      */
     public FractureCollection(ArrayList<FractureVoxel> fractureVoxels) {
         group(fractureVoxels);
         ColourBuilder.assignColorsToFractures(this.arrFractures);
     }
-    
 
-    
+
+    /**
+     * Groups FractureVoxel objects into FractureObjects
+     * @param arrFV ArrayList of FractureVoxels
+     */
     public void group(ArrayList<FractureVoxel> arrFV){
         //iterate through list of idenitfied fracure voxels 
         //outer: //outer label to continue to outer portion of nested loops
@@ -78,39 +88,7 @@ public class FractureCollection {
 
             }
      }
-            
-    
 
-    // /**
-    //  * Gets grouping of fractures from a set of fracture voxels and appends them to fractures list
-    //  * @param fractureVoxels List of fracture voxels (ungrouped)
-    //  * @return ArrayList<Fracture> List of fractures
-    //  */
-    // public ArrayList<Fracture> getFractures(ArrayList<FractureVoxel> fractureVoxels) {
-    //     for (FractureVoxel fractureVoxel : fractureVoxels) {
-    //         for (FractureVoxel fractureVoxelNeighbour : fractureVoxels) {
-    //             // TODO: no neighbour case
-    //             if (fractureVoxel.isNeighbourVoxel(fractureVoxelNeighbour)) {
-    //                 if (!fractureVoxelNeighbour.hasAssignedFracture()) {
-    //                     if (!fractureVoxel.hasAssignedFracture()) {
-    //                         Fracture newFracture = new Fracture();
-    //                         // add both voxels to new fracture
-    //                         // NOTE: when voxels are added to fracture they are marked assigned
-    //                         newFracture.addVoxel(fractureVoxel);
-    //                         newFracture.addVoxel(fractureVoxelNeighbour);
-    //                         fractures.add(newFracture);
-    //                     }else{
-    //                         // NOTE: when voxels are added to fracture they are marked assigned
-    //                         fractureVoxel.getAssignedFracture().addVoxel(fractureVoxelNeighbour);
-    //                     }
-    //                 }else{
-    //                     // TODO: merge two fractures if fractureVoxelNeighbour and fractureVoxel fractures are different
-    //                 }
-    //             }
-    //         }
-    //     }
-    //     return fractures;
-    // }
 
     /**
      * Gets an image representation of the fractures for a given Z plane
@@ -138,11 +116,19 @@ public class FractureCollection {
         }
     }
 
+    /**
+     * Gets an ArrayList of Fractures in the CTImageSlice
+     * @return ArrayList of Fracture objects
+     */
     public ArrayList<Fracture> getFractures() {
         return arrFractures;
     }
 
-
+    /**
+     * Combines the Fracture Objects that are touching
+     * @param fractureArray the current Fractures
+     * @return the fractureArray after the Fracture objects have been combined
+     */
     public static Fracture combineFractures(ArrayList<Fracture> fractureArray){
         //combine fractures
         Fracture fracture = new Fracture();

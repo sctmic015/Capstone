@@ -2,6 +2,10 @@ package VFDS;
 
 import java.util.ArrayList;
 
+/**
+ * A class used for detecting fracture voxels
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class Detection {
 
     static int LOWER_BOUND_THRESHOLD = 200;
@@ -116,6 +120,13 @@ public class Detection {
         return fractureVoxels;
     }
 
+    /**
+     * Determines whether a voxel lies outside of the shape, inside of the shape or on the border of the shape
+     * @param imageSlice
+     * @param x
+     * @param y
+     * @return 0 if the voxel is out of the shape, 1 if it is on the edge of the shape, 2 if it is in the shape
+     */
     public static int tentacles(CTImageSlice imageSlice, int x, int y){
         boolean inShape = false;
         int count = 0;
@@ -153,30 +164,5 @@ public class Detection {
         else
             return 2;
     }
-    /** 
-     * Method to test the number of coloured voxels around a fractured voxel
-     * If the count is greater than 4 we can assume it is a fracture
-     * Else if the count is less than or equal to 4 we can assume it is part of the background
-     * @param x X Co-ordinate of voxel/pixel to check 
-     * @param y Y Co-ordinate of voxel/pixel to check 
-     * @return
-     */
-    public boolean testNeighbours(int x, int y, CTImageSlice imageSlice){
-        int count = 0;
-        for (int i = x -1; i <= x +1; i ++){
-            for (int j = y -1; j <= y +1; j ++){
-                if (imageSlice.getImageData()[i][j] > LOWER_BOUND_THRESHOLD && 
-                    imageSlice.getImageData()[i][j] < UPPER_BOUND_THRESHOLD){
-                    count ++;
-                }
-            }
-        }
-        if (count > 4){
-            return true;
-        }
-        else
-            return false;
-    }
-
 
 }

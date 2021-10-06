@@ -1,15 +1,22 @@
 package VFDS;
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.util.concurrent.RecursiveAction;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
 
-
+/**
+ * A class used to create a CTStack Object from an ArrayList of Files using the Fork-Join Framework
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class ForkJoinReadInFile extends RecursiveAction{
     private static int threshold = 1; // threshold for recursion (num. of images to work on per a thread)
-
+    public static int count = 0;
     private ArrayList<File> files;
     private ArrayList<CTImageSlice> imageSlices;
     private int pos;
+    JProgressBar pb;
 
     /**
      * Constructor to create RecursiveAction task
@@ -21,6 +28,8 @@ public class ForkJoinReadInFile extends RecursiveAction{
         this.files = files;
         this.imageSlices = imageSlices;
         this.pos = pos;
+
+
     }
     
     /**
@@ -32,7 +41,10 @@ public class ForkJoinReadInFile extends RecursiveAction{
     protected void compute() {
         // https://docs.oracle.com/javase/tutorial/essential/concurrency/forkjoin.html
         // https://mkyong.com/java/java-fork-join-framework-examples/
-        // to make seq. change "files" to "imageSlices" 
+        // to make seq. change "files" to "imageSlices"
+
+
+
         int numFiles=files.size(); //TODO:remove
         if (numFiles <= threshold) {
             // compute directly
@@ -59,6 +71,9 @@ public class ForkJoinReadInFile extends RecursiveAction{
             );
             
         }
+    }
+    public static int getCount(){
+        return count;
     }
     
 }

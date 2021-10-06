@@ -3,6 +3,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.*;
 
+/**
+ * A class representing the ZImageFrame of the an ImageSlice from the CTImageStack
+ * @author SCTMIC015, SMTJUL022, BLRDAV002
+ */
 public class ZImageFrame extends JFrame{
     private static final int PANEL_SIZE = 600;
     // Instance variables 

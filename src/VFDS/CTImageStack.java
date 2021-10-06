@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Scanner;
 import java.awt.image.*;
 import java.awt.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Holds a stack of image slices 
