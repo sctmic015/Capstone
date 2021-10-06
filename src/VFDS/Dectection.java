@@ -48,9 +48,6 @@ public class Dectection {
          }
 
          //this section checks the following/preceding values of the index to determine if it is a bound threshold
-         //counter also serves as index for histogram
-
-
          //find upper bound
          for(int i = arrHistogram.size() -10; i >= 0; i--){
              int x_val = arrHistogram.get(i);
@@ -75,7 +72,7 @@ public class Dectection {
 
 
          LOWER_BOUND_THRESHOLD = tempLower;
-         UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.1);
+         UPPER_BOUND_THRESHOLD = (int)(tempHigher + (tempHigher - tempLower)*0.2);
 
      }
 
